@@ -1,0 +1,85 @@
+# =========================
+# Unity generated folders
+# =========================
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild/
+[Bb]uilds/
+[Ll]ogs/
+UserSettings/
+
+# MemoryCaptures can get large
+MemoryCaptures/
+
+# =========================
+# Asset meta data (keep!)
+# =========================
+# DO NOT ignore .meta files
+!*.meta
+
+# =========================
+# Visual Studio / Rider / VSCode
+# =========================
+.vs/
+*.csproj
+*.unityproj
+*.sln
+*.suo
+*.tmp
+*.user
+*.userprefs
+*.pidb
+*.booproj
+*.svd
+*.pdb
+*.mdb
+*.opendb
+*.VC.db
+
+# JetBrains Rider
+.idea/
+
+# VS Code
+.vscode/
+
+# =========================
+# OS generated files
+# =========================
+.DS_Store
+Thumbs.db
+
+# =========================
+# Unity cache server
+# =========================
+/Cache/
+
+# =========================
+# Addressables / Asset Bundles
+# =========================
+ServerData/
+
+# =========================
+# Crash reports
+# =========================
+sysinfo.txt
+
+# =========================
+# Android / iOS build artifacts
+# =========================
+.gradle/
+*.apk
+*.aab
+*.keystore
+*.unitypackage
+
+# Xcode
+DerivedData/
+*.xcworkspace
+*.xcuserdata/
+*.xcuserstate
+
+# =========================
+# Misc
+# =========================
+*.log

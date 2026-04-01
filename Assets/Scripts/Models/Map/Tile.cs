@@ -1,0 +1,42 @@
+using System.Collections.Generic;
+using UnityEngine;
+using System.Linq;
+
+public class Tile {
+    public int X { get; private set; }
+    public int Z { get; private set; }
+
+    public Tile(int x, int z) {
+        X = x;
+        Z = z;
+    }
+
+    public enum Flatness {
+        Flat,
+        Gentle,
+        Sloped,
+    }
+
+    public static Tile Get(int x, int z) {
+        return Map.Inst().tiles[x, z] ?? null;
+    }
+
+    public Vector3 GetPosition() {
+        List<TileCorner> corners = GetCorners();
+        float height = corners.Average(c => (float)c.H);
+        return new Vector3(X + 0.5f, height, Z + 0.5f);
+    }
+
+
+    public List<TileCorner> GetCorners() {
+        List<TileCorner> corners = new List<TileCorner>();
+        corners.Add(TileCorner.Get(X, Z));
+        corners.Add(TileCorner.Get(X + 1, Z));
+        corners.Add(TileCorner.Get(X, Z + 1));
+        corners.Add(TileCorner.Get(X + 1, Z + 1));
+        return corners;
+    }
+
+
+
+}
