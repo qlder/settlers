@@ -3,6 +3,10 @@ using UnityEngine;
 
 public abstract class Job {
 
-    public abstract void Tick(Entity entity, int tickCount);
+    public string actionName = "TEST JOB";
+    public abstract void Tick(int tickCount);
+
+    public abstract void Interrupt();
+    public abstract void Complete();
 
 }

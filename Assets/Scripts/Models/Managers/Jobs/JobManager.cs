@@ -8,7 +8,7 @@ public class JobManager {
     }
 
     public Job GetJobForEntity(Entity entity) {
-        return new JobWander();
+        return new JobWander(entity);
     }
 
     public void RemoveJob(Entity entity) {

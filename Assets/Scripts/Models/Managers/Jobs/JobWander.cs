@@ -3,46 +3,51 @@ using UnityEngine;
 
 public class JobWander : Job {
 
+    private Entity entity;
     //State Control
     enum State {
-        Idle,
-        PathFinding,
+        Decide,
         Moving,
-        Complete,
     }
     private State state;
 
     //Data Control
-    private Tile wanderToTarget;
+    private Movement movementToTarget;
 
-    public JobWander() {
-        state = State.Idle;
+    public JobWander(Entity entity) {
+        this.entity = entity;
+        state = State.Decide;
+        this.actionName = "Thinking";
     }
 
-    public override void Tick(Entity entity, int tickCount) {
+    public override void Tick(int tickCount) {
         switch (state) {
-            case State.Idle:
-                this.wanderToTarget = Map.Inst().GetRandomNearbyTile(entity.currentTile, 100, 150);
-                state = State.PathFinding;
-                break;
-            case State.PathFinding:
-                entity.path = PathFinding.Inst().GetPathForEntity(entity, wanderToTarget);
-                // Debug.Log($"Entity {entity.name} is wandering to {wanderToTarget.X}, {wanderToTarget.Z}");
+            case State.Decide:
+                if (tickCount % 100 != 0) {
+                    return;
+                }
+                Tile wanderToTarget = Map.Inst().GetRandomNearbyTile(entity.currentTile, 10, 15);
+                movementToTarget = new Movement(entity, wanderToTarget);
+                movementToTarget.Start();
                 state = State.Moving;
+                this.actionName = "Wandering";
                 break;
             case State.Moving:
-                // Debug.Log($"Entity {entity.name} is moving along path to tickCount {tickCount}");
-                entity.MoveAlongPath(tickCount);
-                // state = State.Complete;
-                if (entity.IsPathInvalid()) {
-                    state = State.Complete;
+                movementToTarget.MoveAlongPath();
+                if (movementToTarget.state == Movement.State.Complete) {
+                    Complete();
                 }
                 break;
-            case State.Complete:
-                JobManager.Inst().RemoveJob(entity);
-                // Job is complete, no further action
-                break;
         }
+    }
+
+    public override void Interrupt() {
+        // Handle interruption logic if needed
+    }
+
+    public override void Complete() {
+        // Handle completion logic if needed
+        JobManager.Inst().RemoveJob(entity);
     }
 
 }
