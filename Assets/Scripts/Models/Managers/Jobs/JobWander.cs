@@ -1,11 +1,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class JobWander : Job {
+public class JobWander : Job
+{
 
     private Entity entity;
     //State Control
-    enum State {
+    enum State
+    {
         Decide,
         Moving,
     }
@@ -14,19 +16,22 @@ public class JobWander : Job {
     //Data Control
     private Movement movementToTarget;
 
-    public JobWander(Entity entity) {
+    public JobWander(Entity entity)
+    {
         this.entity = entity;
         state = State.Decide;
         this.actionName = "Thinking";
     }
 
-    public override void Tick(int tickCount) {
-        switch (state) {
+    public override void Tick(int tickCount)
+    {
+        switch (state)
+        {
             case State.Decide:
-                if (tickCount % 100 != 0) {
-                    return;
-                }
-                Tile wanderToTarget = Map.Inst().GetRandomNearbyTile(entity.currentTile, 10, 15);
+                // if (tickCount % 100 != 0) {
+                //     return;
+                // }
+                Tile wanderToTarget = Map.Inst().GetRandomNearbyTile(entity.GetTile(), 10, 15);
                 movementToTarget = new Movement(entity, wanderToTarget);
                 movementToTarget.Start();
                 state = State.Moving;
@@ -34,18 +39,21 @@ public class JobWander : Job {
                 break;
             case State.Moving:
                 movementToTarget.MoveAlongPath();
-                if (movementToTarget.state == Movement.State.Complete) {
+                if (movementToTarget.state == Movement.State.Complete)
+                {
                     Complete();
                 }
                 break;
         }
     }
 
-    public override void Interrupt() {
+    public override void Interrupt()
+    {
         // Handle interruption logic if needed
     }
 
-    public override void Complete() {
+    public override void Complete()
+    {
         // Handle completion logic if needed
         JobManager.Inst().RemoveJob(entity);
     }

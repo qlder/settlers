@@ -24,12 +24,12 @@ public class HumanRenderer : MonoBehaviour {
     }
 
     void InstantiateHuman(Human human) {
-        if (human.currentTile == null) {
+        if (human.GetTile() == null) {
             Debug.LogError($"Human {human.name} has no tile assigned.");
             return;
         }
-        Tile tile = human.currentTile;
-        Vector3 position = tile.GetPosition();
+        Tile tile = human.GetTile();
+        Vector3 position = human.currentPosition.GetVector3();
         GameObject humanObject = GameObject.Instantiate(humanPrefab, position, Quaternion.identity, transform);
         humanObject.name = human.name;
         humanObjects.Add(human, humanObject);
@@ -39,13 +39,13 @@ public class HumanRenderer : MonoBehaviour {
         foreach (Human human in Game.Inst.humans) {
             if (humanObjects.ContainsKey(human)) {
                 GameObject humanObject = humanObjects[human];
-                humanObject.transform.position = human.currentTile.GetPosition();
+                humanObject.transform.position = human.currentPosition.GetVector3();
             }
         }
     }
 
     void OnDrawGizmos() {
-
+        return;
         GUIStyle style = new GUIStyle();
         style.fontSize = 14;
         style.normal.textColor = Color.white;
@@ -56,8 +56,7 @@ public class HumanRenderer : MonoBehaviour {
                 string debugText = "";
                 if (human.currentJob == null) {
                     debugText = "🔴 No Job";
-                }
-                else {
+                } else {
                     debugText = $"🟢 {human.currentJob.GetType().Name} : {human.currentJob.actionName}";//: 
                 }
                 Vector3 worldPos = humanObject.transform.position + new Vector3(0, 2.5f, 0);

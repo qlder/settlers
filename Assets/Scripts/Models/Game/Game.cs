@@ -1,7 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Game {
+public class Game
+{
 
     public static Game Inst;
 
@@ -13,7 +14,8 @@ public class Game {
     public JobManager jobManager { get; private set; }
     public PathFinding pathFinding { get; private set; }
 
-    public Game(GameOptions options) {
+    public Game(GameOptions options)
+    {
         this.options = options;
         this.map = new Map(options);
         this.humans = new List<Human>();
@@ -23,9 +25,11 @@ public class Game {
     }
 
     //Powered by the kernel.
-    public void Tick(int tickCount, int frameCount, bool firstTick) {
+    public void Tick(int tickCount, int frameCount, bool firstTick)
+    {
         // Debug.Log($"Tick: {tickCount} -- {frameCount} frames : {firstTick}");
-        foreach (Human human in humans) {
+        foreach (Human human in humans)
+        {
             human.Tick(tickCount);
         }
     }

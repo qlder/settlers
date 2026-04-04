@@ -15,7 +15,7 @@ public class EntityGenerator {
             int z = UnityEngine.Random.Range(0, map.tileLength);
             Tile tile = Tile.Get(x, z);
             Human human = HumanFactory.CreateHuman();
-            human.currentTile = tile;
+            human.currentPosition = tile.GetPosition();
             game.humans.Add(human);
         }
 

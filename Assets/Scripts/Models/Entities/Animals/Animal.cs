@@ -1,6 +1,7 @@
 using UnityEngine;
 
-public class Animal : Entity {
+public class Animal : Entity
+{
 
     // public static Animal CreateAnimal(Animal father, Animal mother) {
     //     Animal animal = new Animal();

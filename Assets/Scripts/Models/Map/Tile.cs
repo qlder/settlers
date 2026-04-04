@@ -21,21 +21,20 @@ public class Tile {
         return Map.Inst().tiles[x, z] ?? null;
     }
 
-    public Vector3 GetPosition() {
-        List<TileCorner> corners = GetCorners();
-        float height = corners.Average(c => (float)c.H);
-        return new Vector3(X + 0.5f, height, Z + 0.5f);
+    public Pos GetPosition() {
+        return new Pos(X + 0.5f, Z + 0.5f);
     }
 
 
-    public List<TileCorner> GetCorners() {
-        List<TileCorner> corners = new List<TileCorner>();
-        corners.Add(TileCorner.Get(X, Z));
-        corners.Add(TileCorner.Get(X + 1, Z));
-        corners.Add(TileCorner.Get(X, Z + 1));
-        corners.Add(TileCorner.Get(X + 1, Z + 1));
-        return corners;
-    }
+
+    // public List<TileCorner> GetCorners() {
+    //     List<TileCorner> corners = new List<TileCorner>();
+    //     corners.Add(TileCorner.Get(X, Z));
+    //     corners.Add(TileCorner.Get(X + 1, Z));
+    //     corners.Add(TileCorner.Get(X, Z + 1));
+    //     corners.Add(TileCorner.Get(X + 1, Z + 1));
+    //     return corners;
+    // }
 
 
 
