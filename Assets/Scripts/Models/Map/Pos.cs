@@ -49,6 +49,10 @@ public class Pos {
         float h01 = TileCorner.Get(X + 0, Z + 1).H; // top-left
         float h11 = TileCorner.Get(X + 1, Z + 1).H; // top-right
 
+        if (h00 == h10 && h00 == h01 && h00 == h11) {
+            return new Vector3(X + tx, h00, Z + tz);
+        }
+
         float height =
             h00 * (1 - tx) * (1 - tz) +
             h10 * tx * (1 - tz) +

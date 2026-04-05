@@ -6,6 +6,8 @@ public class Tile {
     public int X { get; private set; }
     public int Z { get; private set; }
 
+    bool isWalkable = true; //Change later...
+
     public Tile(int x, int z) {
         X = x;
         Z = z;
