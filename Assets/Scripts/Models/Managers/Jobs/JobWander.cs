@@ -23,7 +23,7 @@ public class JobWander : Job {
     public override void Tick(int tickCount) {
         switch (state) {
             case State.Decide:
-                Tile wanderToTarget = Map.Inst().GetRandomNearbyTile(entity.GetTile(), 200, 250);
+                Tile wanderToTarget = Map.Inst().GetRandomNearbyTile(entity.GetTile(), 10, 25);
                 movementToTarget = new Movement(entity, wanderToTarget);
                 movementToTarget.Start();
                 state = State.Moving;

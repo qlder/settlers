@@ -10,7 +10,7 @@ public class Kernel : MonoBehaviour {
         GameGenerator.Generate(game);
     }
 
-    private float tickInterval = 0.01f;
+    private float tickInterval = 0.02f;
     private float accumulator;
     private int tickCount;
     private int frameCount;

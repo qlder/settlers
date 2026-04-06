@@ -9,7 +9,7 @@ public class Entity {
     public Pos currentPosition;
     public Pos headingPosition;
 
-    public float moveSpeed = 0.15f;
+    public float moveSpeed = 0.03f;
 
     public Tile GetTile() {
         return currentPosition.GetTile();

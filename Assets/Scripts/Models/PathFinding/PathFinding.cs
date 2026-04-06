@@ -1,155 +1,212 @@
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using UnityEngine;
 
 public class PathFinding {
+    static PathFinding inst;
+
     public static PathFinding Inst() {
         return Game.Inst.pathFinding;
     }
 
-    public Queue<Tile> GetPathForEntity(Entity entity, Tile target) {
-        return AStarPathFinding(entity, target);
+    public void Initialize() {
+        PathFindingThreader.Inst().Start();
     }
 
-    public Queue<Tile> AStarPathFinding(Entity entity, Tile target) {
-        Tile start = entity.GetTile();
+    public void Shutdown() {
+        PathFindingThreader.Inst().Stop();
+    }
 
-        if (start == null || target == null || start == target)
-            return new Queue<Tile>();
+    public PathRequest FindPath(Tile start, Tile target) {
+        if (start == null || target == null) {
+            Tile fallback = Tile.Get(0, 0);
 
+            PathRequest failedRequest = new PathRequest(
+                start ?? fallback,
+                target ?? fallback
+            );
+
+            failedRequest.Status = PathRequestStatus.Failed;
+            failedRequest.Path = null;
+            return failedRequest;
+        }
+
+        PathRequest request = new PathRequest(start, target);
+        PathFindingThreader.Inst().Enqueue(request);
+        // UnityEngine.Debug.Log($"Enqueued pathfinding request from ({start.X}, {start.Z}) to ({target.X}, {target.Z})");
+        return request;
+    }
+
+    internal void ProcessRequest(PathRequest request) {
+        request.Status = PathRequestStatus.Running;
+
+        Queue<Tile> path = FindPathInternal(
+            request.StartX,
+            request.StartZ,
+            request.TargetX,
+            request.TargetZ
+        );
+
+        if (path != null && path.Count > 0) {
+            request.Path = path;
+            request.Status = PathRequestStatus.Complete;
+        } else {
+            request.Path = null;
+            request.Status = PathRequestStatus.Failed;
+        }
+    }
+
+    Queue<Tile> FindPathInternal(int startX, int startZ, int targetX, int targetZ) {
         Map map = Map.Inst();
 
-        List<Tile> openSet = new List<Tile>();
-        HashSet<Tile> closedSet = new HashSet<Tile>();
+        if (!IsInBounds(startX, startZ, map) || !IsInBounds(targetX, targetZ, map)) {
+            return null;
+        }
 
-        Dictionary<Tile, Tile> cameFrom = new Dictionary<Tile, Tile>();
-        Dictionary<Tile, int> gScore = new Dictionary<Tile, int>();
-        Dictionary<Tile, int> fScore = new Dictionary<Tile, int>();
+        if (startX == targetX && startZ == targetZ) {
+            Queue<Tile> singleTilePath = new Queue<Tile>();
+            singleTilePath.Enqueue(map.tiles[startX, startZ]);
+            return singleTilePath;
+        }
 
-        openSet.Add(start);
-        gScore[start] = 0;
-        fScore[start] = Heuristic(start, target);
+        PathNode[,] nodes = new PathNode[map.tileLength, map.tileLength];
+        bool[,] closedSet = new bool[map.tileLength, map.tileLength];
+        List<PathNode> openList = new List<PathNode>();
 
-        while (openSet.Count > 0) {
-            Tile current = GetLowestFScore(openSet, fScore);
+        PathNode startNode = GetNode(startX, startZ, nodes);
+        PathNode targetNode = GetNode(targetX, targetZ, nodes);
 
-            if (current == target)
-                return ReconstructPath(cameFrom, current, start);
+        startNode.GCost = 0;
+        startNode.HCost = GetDistance(startX, startZ, targetX, targetZ);
 
-            openSet.Remove(current);
-            closedSet.Add(current);
+        openList.Add(startNode);
 
-            foreach (Tile neighbor in GetNeighbors(map, current, entity, target)) {
-                if (neighbor == null || closedSet.Contains(neighbor))
-                    continue;
+        while (openList.Count > 0) {
+            PathNode currentNode = GetLowestCostNode(openList);
 
-                int tentativeGScore = GetScore(gScore, current) + 1;
+            if (currentNode.X == targetNode.X && currentNode.Z == targetNode.Z) {
+                return RetracePath(startNode, currentNode, map);
+            }
 
-                if (!openSet.Contains(neighbor)) {
-                    openSet.Add(neighbor);
-                } else if (tentativeGScore >= GetScore(gScore, neighbor)) {
+            openList.Remove(currentNode);
+            closedSet[currentNode.X, currentNode.Z] = true;
+
+            foreach (PathNode neighbor in GetNeighbors(currentNode, nodes, map)) {
+                if (closedSet[neighbor.X, neighbor.Z]) {
                     continue;
                 }
 
-                cameFrom[neighbor] = current;
-                gScore[neighbor] = tentativeGScore;
-                fScore[neighbor] = tentativeGScore + Heuristic(neighbor, target);
+                if (!IsWalkable(neighbor.X, neighbor.Z, map) &&
+                    !(neighbor.X == targetX && neighbor.Z == targetZ)) {
+                    continue;
+                }
+
+                int movementCostToNeighbor = currentNode.GCost + GetDistance(
+                    currentNode.X,
+                    currentNode.Z,
+                    neighbor.X,
+                    neighbor.Z
+                );
+
+                if (movementCostToNeighbor < neighbor.GCost || !openList.Contains(neighbor)) {
+                    neighbor.GCost = movementCostToNeighbor;
+                    neighbor.HCost = GetDistance(neighbor.X, neighbor.Z, targetX, targetZ);
+                    neighbor.Parent = currentNode;
+
+                    if (!openList.Contains(neighbor)) {
+                        openList.Add(neighbor);
+                    }
+                }
             }
         }
 
-        return new Queue<Tile>();
+        return null;
     }
 
-    // Correct for 8-direction movement with uniform move cost = 1.
-    private int Heuristic(Tile a, Tile b) {
-        return Mathf.Max(Mathf.Abs(a.X - b.X), Mathf.Abs(a.Z - b.Z));
+    PathNode GetNode(int x, int z, PathNode[,] nodes) {
+        if (nodes[x, z] == null) {
+            nodes[x, z] = new PathNode(x, z);
+        }
+
+        return nodes[x, z];
     }
 
-    private int GetScore(Dictionary<Tile, int> scores, Tile tile) {
-        return scores.TryGetValue(tile, out int score) ? score : int.MaxValue;
-    }
+    PathNode GetLowestCostNode(List<PathNode> openList) {
+        PathNode bestNode = openList[0];
 
-    private Tile GetLowestFScore(List<Tile> openSet, Dictionary<Tile, int> fScore) {
-        Tile bestTile = openSet[0];
-        int bestScore = GetScore(fScore, bestTile);
+        for (int i = 1; i < openList.Count; i++) {
+            PathNode node = openList[i];
 
-        for (int i = 1; i < openSet.Count; i++) {
-            Tile tile = openSet[i];
-            int score = GetScore(fScore, tile);
-
-            if (score < bestScore) {
-                bestScore = score;
-                bestTile = tile;
+            if (node.FCost < bestNode.FCost ||
+                (node.FCost == bestNode.FCost && node.HCost < bestNode.HCost)) {
+                bestNode = node;
             }
         }
 
-        return bestTile;
+        return bestNode;
     }
 
-    private IEnumerable<Tile> GetNeighbors(Map map, Tile tile, Entity entity, Tile target) {
-        int x = tile.X;
-        int z = tile.Z;
+    List<PathNode> GetNeighbors(PathNode node, PathNode[,] nodes, Map map) {
+        List<PathNode> neighbors = new List<PathNode>();
 
         for (int dx = -1; dx <= 1; dx++) {
             for (int dz = -1; dz <= 1; dz++) {
-                if (dx == 0 && dz == 0)
+                if (dx == 0 && dz == 0) {
                     continue;
-
-                int nx = x + dx;
-                int nz = z + dz;
-
-                if (nx < 0 || nx >= map.tileLength || nz < 0 || nz >= map.tileLength)
-                    continue;
-
-                Tile neighbor = map.tiles[nx, nz];
-
-                if (!CanEntityMoveToTile(entity, neighbor, target))
-                    continue;
-
-                // Prevent diagonal corner cutting.
-                if (dx != 0 && dz != 0) {
-                    Tile sideA = map.tiles[x + dx, z];
-                    Tile sideB = map.tiles[x, z + dz];
-
-                    if (!CanEntityMoveToTile(entity, sideA, target) ||
-                        !CanEntityMoveToTile(entity, sideB, target)) {
-                        continue;
-                    }
                 }
 
-                yield return neighbor;
+                int neighborX = node.X + dx;
+                int neighborZ = node.Z + dz;
+
+                if (!IsInBounds(neighborX, neighborZ, map)) {
+                    continue;
+                }
+
+                neighbors.Add(GetNode(neighborX, neighborZ, nodes));
             }
         }
+
+        return neighbors;
     }
 
-    private bool CanEntityMoveToTile(Entity entity, Tile tile, Tile target) {
-        if (tile == null)
-            return false;
+    Queue<Tile> RetracePath(PathNode startNode, PathNode endNode, Map map) {
+        List<Tile> reversed = new List<Tile>();
+        PathNode currentNode = endNode;
 
-        if (tile == target)
-            return true;
+        while (currentNode != null) {
+            reversed.Add(map.tiles[currentNode.X, currentNode.Z]);
 
-        // Replace with your actual logic.
-        // Example:
-        // return !tile.IsBlocked && tile.occupier == null;
-
-        return true;
-    }
-
-    private Queue<Tile> ReconstructPath(Dictionary<Tile, Tile> cameFrom, Tile current, Tile start) {
-        List<Tile> path = new List<Tile>();
-
-        while (current != null) {
-            path.Add(current);
-
-            if (!cameFrom.TryGetValue(current, out current))
+            if (currentNode.X == startNode.X && currentNode.Z == startNode.Z) {
                 break;
+            }
+
+            currentNode = currentNode.Parent;
         }
 
-        path.Reverse();
+        reversed.Reverse();
 
-        if (path.Count > 0 && path[0] == start)
-            path.RemoveAt(0);
+        Queue<Tile> pathQueue = new Queue<Tile>(reversed);
+        return pathQueue;
+    }
 
-        return new Queue<Tile>(path);
+    bool IsInBounds(int x, int z, Map map) {
+        return x >= 0 && x < map.tileLength && z >= 0 && z < map.tileLength;
+    }
+
+    bool IsWalkable(int x, int z, Map map) {
+        Tile tile = map.tiles[x, z];
+        return tile != null && tile.isWalkable;
+    }
+
+    int GetDistance(int x1, int z1, int x2, int z2) {
+        int dstX = Math.Abs(x1 - x2);
+        int dstZ = Math.Abs(z1 - z2);
+
+        if (dstX > dstZ) {
+            return 14 * dstZ + 10 * (dstX - dstZ);
+        }
+
+        return 14 * dstX + 10 * (dstZ - dstX);
     }
 }

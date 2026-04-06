@@ -1,16 +1,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using UnityEditor.Rendering;
 
 public class Tile {
     public int X { get; private set; }
     public int Z { get; private set; }
 
-    bool isWalkable = true; //Change later...
+    public bool isWalkable { get; private set; }
 
     public Tile(int x, int z) {
         X = x;
         Z = z;
+        isWalkable = true;
     }
 
     public enum Flatness {

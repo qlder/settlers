@@ -34,17 +34,27 @@ public class Map {
 
     public Tile GetRandomNearbyTile(Tile currentTile, int minDistance, int maxDistance) {
         for (int i = 0; i < 10; i++) {
-            int distance = UnityEngine.Random.Range(minDistance, maxDistance + 1);
-            int angle = UnityEngine.Random.Range(0, 360);
-            int xOffset = Mathf.RoundToInt(distance * Mathf.Cos(angle * Mathf.Deg2Rad));
-            int zOffset = Mathf.RoundToInt(distance * Mathf.Sin(angle * Mathf.Deg2Rad));
+            int xOffset = UnityEngine.Random.Range(-maxDistance, maxDistance + 1);
+            int zOffset = UnityEngine.Random.Range(-maxDistance, maxDistance + 1);
+
+            // Enforce minimum distance (square ring, not full square)
+            if (Mathf.Abs(xOffset) < minDistance && Mathf.Abs(zOffset) < minDistance)
+                continue;
+
             int newX = currentTile.X + xOffset;
             int newZ = currentTile.Z + zOffset;
+
             if (newX >= 0 && newX < tileLength && newZ >= 0 && newZ < tileLength) {
+                if (!tiles[newX, newZ].isWalkable) {
+                    continue;
+                }
                 return tiles[newX, newZ];
             }
         }
-        return null; // Placeholder
+
+        return null;
     }
+
+
 
 }

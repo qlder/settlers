@@ -1,10 +1,12 @@
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 
 public class Movement {
 
     public Entity entity;
     public Tile targetTile;
+    public PathRequest pathRequest;
     public Queue<Tile> path = null;
 
     public enum State {
@@ -24,12 +26,22 @@ public class Movement {
 
     public void Start() {
         this.state = State.PathFinding;
-        this.path = PathFinding.Inst().GetPathForEntity(entity, targetTile);
-        this.state = State.Moving;
+        this.pathRequest = PathFinding.Inst().FindPath(entity.GetTile(), targetTile);
     }
 
 
     public void MoveAlongPath() {
+        if (this.state == State.PathFinding) {
+            if (pathRequest.IsDone) {
+                if (pathRequest.Success) {
+                    this.path = pathRequest.Path;
+                    this.state = State.Moving;
+                } else {
+                    this.state = State.Invalid;
+                }
+            }
+        }
+
         if (this.state != State.Moving) {
             return;
         }
