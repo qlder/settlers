@@ -30,7 +30,7 @@ public class Movement {
     }
 
 
-    public void MoveAlongPath() {
+    public void MoveAlongPath(int ticks) {
         if (this.state == State.PathFinding) {
             if (pathRequest.IsDone) {
                 if (pathRequest.Success) {
@@ -57,7 +57,9 @@ public class Movement {
         entity.headingPosition = nextTile.GetPosition();
 
         float distance = Vector2.Distance(entity.currentPosition.GetVector2(), entity.headingPosition.GetVector2());
-        float step = entity.moveSpeed;
+        float step = entity.moveSpeed * (float)ticks;
+
+        // Debug.Log("Distance: " + distance + ", Step: " + step + " -- Ticks: " + ticks);
 
 
         if (step < distance) {

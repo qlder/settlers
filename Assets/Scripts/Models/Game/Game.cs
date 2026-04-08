@@ -7,29 +7,29 @@ public class Game {
 
     public GameOptions options { get; private set; }
     public Map map { get; private set; }
-    public List<Human> humans { get; private set; }
-    public List<Animal> animals { get; private set; }
+    public List<Entity> entities { get; private set; }
 
     public JobManager jobManager { get; private set; }
     public PathFinding pathFinding { get; private set; }
-    public PathFindingThreader pathFindingThreader { get; private set; }
+    public Controller controller { get; private set; }
 
     public Game(GameOptions options) {
         this.options = options;
+        this.controller = new Controller();
         this.map = new Map(options);
-        this.humans = new List<Human>();
-        this.animals = new List<Animal>();
+        this.entities = new List<Entity>();
         this.jobManager = new JobManager();
         this.pathFinding = new PathFinding();
-        this.pathFindingThreader = new PathFindingThreader();
-        this.pathFindingThreader.Start();
+        this.pathFinding.Initialize();
     }
 
     //Powered by the kernel.
-    public void Tick(int tickCount, int frameCount, bool firstTick) {
+    public void Tick(int ticks) {
+
+        controller.DealWithInput();
         // Debug.Log($"Tick: {tickCount} -- {frameCount} frames : {firstTick}");
-        foreach (Human human in humans) {
-            human.Tick(tickCount);
+        foreach (Entity entity in entities) {
+            entity.Tick(ticks);
         }
     }
 

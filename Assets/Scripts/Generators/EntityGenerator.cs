@@ -21,7 +21,7 @@ public class EntityGenerator {
             }
             Human human = HumanFactory.CreateHuman();
             human.currentPosition = tile.GetPosition();
-            game.humans.Add(human);
+            game.entities.Add(human);
         }
 
     }

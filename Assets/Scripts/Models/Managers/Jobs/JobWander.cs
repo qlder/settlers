@@ -20,17 +20,21 @@ public class JobWander : Job {
         this.actionName = "Thinking";
     }
 
-    public override void Tick(int tickCount) {
+    public override void Tick(int ticks) {
         switch (state) {
             case State.Decide:
-                Tile wanderToTarget = Map.Inst().GetRandomNearbyTile(entity.GetTile(), 10, 25);
+                Tile wanderToTarget = Map.Inst().GetRandomNearbyTile(entity.GetTile(), 200, 250);
+                if (wanderToTarget == null) {
+                    // Debug.LogError("No valid wander target found.");
+                    return;
+                }
                 movementToTarget = new Movement(entity, wanderToTarget);
                 movementToTarget.Start();
                 state = State.Moving;
                 this.actionName = "Wandering";
                 break;
             case State.Moving:
-                movementToTarget.MoveAlongPath();
+                movementToTarget.MoveAlongPath(ticks);
                 if (movementToTarget.state == Movement.State.Complete) {
                     Complete();
                 }
@@ -39,7 +43,8 @@ public class JobWander : Job {
     }
 
     public override void Interrupt() {
-        // Handle interruption logic if needed
+        Debug.Log("Wander job interrupted for entity: " + entity.name);
+        Complete();
     }
 
     public override void Complete() {

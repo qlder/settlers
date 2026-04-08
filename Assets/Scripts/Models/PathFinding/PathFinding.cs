@@ -5,17 +5,20 @@ using UnityEngine;
 
 public class PathFinding {
     static PathFinding inst;
+    public PathFindingThreader pathFindingThreader { get; private set; }
 
     public static PathFinding Inst() {
         return Game.Inst.pathFinding;
     }
 
     public void Initialize() {
-        PathFindingThreader.Inst().Start();
+        pathFindingThreader = new PathFindingThreader();
+        pathFindingThreader.Start();
     }
 
     public void Shutdown() {
-        PathFindingThreader.Inst().Stop();
+        pathFindingThreader.Stop();
+        pathFindingThreader = null;
     }
 
     public PathRequest FindPath(Tile start, Tile target) {
@@ -33,7 +36,7 @@ public class PathFinding {
         }
 
         PathRequest request = new PathRequest(start, target);
-        PathFindingThreader.Inst().Enqueue(request);
+        pathFindingThreader.Enqueue(request);
         // UnityEngine.Debug.Log($"Enqueued pathfinding request from ({start.X}, {start.Z}) to ({target.X}, {target.Z})");
         return request;
     }

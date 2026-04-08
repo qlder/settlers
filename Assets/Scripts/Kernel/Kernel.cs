@@ -10,20 +10,18 @@ public class Kernel : MonoBehaviour {
         GameGenerator.Generate(game);
     }
 
-    private float tickInterval = 0.02f;
+    private float tickInterval = 0.01f;
     private float accumulator;
-    private int tickCount;
     private int frameCount;
 
     void Update() {
         accumulator += Time.deltaTime;
-        bool firstTick = true;
+        int ticks = 0;
         while (accumulator >= tickInterval) {
             accumulator -= tickInterval;
-            tickCount++;
-            Game.Inst.Tick(tickCount, frameCount, firstTick);
-            firstTick = false;
+            ticks++;
         }
+        Game.Inst.Tick(ticks);
         frameCount++;
     }
 

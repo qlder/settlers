@@ -1,31 +1,35 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
-using UnityEditor.Rendering;
 
-public class Tile {
+public class Tile
+{
     public int X { get; private set; }
     public int Z { get; private set; }
 
     public bool isWalkable { get; private set; }
 
-    public Tile(int x, int z) {
+    public Tile(int x, int z)
+    {
         X = x;
         Z = z;
         isWalkable = true;
     }
 
-    public enum Flatness {
+    public enum Flatness
+    {
         Flat,
         Gentle,
         Sloped,
     }
 
-    public static Tile Get(int x, int z) {
+    public static Tile Get(int x, int z)
+    {
         return Map.Inst().tiles[x, z] ?? null;
     }
 
-    public Pos GetPosition() {
+    public Pos GetPosition()
+    {
         return new Pos(X + 0.5f, Z + 0.5f);
     }
 

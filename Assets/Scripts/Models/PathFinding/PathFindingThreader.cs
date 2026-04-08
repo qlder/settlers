@@ -13,9 +13,9 @@ public class PathFindingThreader {
 
     bool isRunning = false;
 
-    public static PathFindingThreader Inst() {
-        return Game.Inst.pathFindingThreader;
-    }
+    // public static PathFindingThreader Inst() {
+    //     return Game.Inst.pathFinding.pathFindingThreader;
+    // }
 
     public void Start() {
         if (isRunning) {
