@@ -8,7 +8,7 @@ public class EntityGenerator {
     }
 
     private static void GenerateEntities(Game game) {
-        Map map = game.map;
+        Map map = game.data.map;
 
         for (int i = 0; i < 1000; i++) {
             bool found = false;
@@ -21,7 +21,7 @@ public class EntityGenerator {
             }
             Human human = HumanFactory.CreateHuman();
             human.currentPosition = tile.GetPosition();
-            game.entities.Add(human);
+            game.data.entities.Add(human);
         }
 
     }

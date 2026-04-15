@@ -1,35 +1,33 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using Newtonsoft.Json;
 
-public class Tile
-{
-    public int X { get; private set; }
-    public int Z { get; private set; }
+[System.Serializable]
+public class Tile {
 
-    public bool isWalkable { get; private set; }
+    public int X;
+    public int Z;
+    public bool isWalkable;
 
-    public Tile(int x, int z)
-    {
-        X = x;
-        Z = z;
-        isWalkable = true;
-    }
+    // public Tile(int x, int z) {
+    //     X = x;
+    //     Z = z;
+    //     isWalkable = true;
+    // }
 
-    public enum Flatness
-    {
-        Flat,
-        Gentle,
-        Sloped,
-    }
+    // public enum Flatness
+    // {
+    //     Flat,
+    //     Gentle,
+    //     Sloped,
+    // }
 
-    public static Tile Get(int x, int z)
-    {
+    public static Tile Get(int x, int z) {
         return Map.Inst().tiles[x, z] ?? null;
     }
 
-    public Pos GetPosition()
-    {
+    public Pos GetPosition() {
         return new Pos(X + 0.5f, Z + 0.5f);
     }
 

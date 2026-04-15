@@ -1,7 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Entity {
+public class Entity
+{
 
     public string name;
 
@@ -11,16 +12,20 @@ public class Entity {
 
     public float moveSpeed = 0.025f;
 
-    public Tile GetTile() {
+    public Tile GetTile()
+    {
         return currentPosition.GetTile();
     }
 
     public Job currentJob = null; //Change later...
-    public void Tick(int ticks) {
-        if (currentJob == null) {
+    public void Tick(int ticks)
+    {
+        if (currentJob == null)
+        {
             currentJob = JobManager.Inst().GetJobForEntity(this);
         }
-        if (currentJob != null) {
+        if (currentJob != null)
+        {
             currentJob.Tick(ticks);
         }
     }

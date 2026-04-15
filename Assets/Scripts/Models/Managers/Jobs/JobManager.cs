@@ -4,7 +4,7 @@ using UnityEngine;
 public class JobManager {
 
     public static JobManager Inst() {
-        return Game.Inst.jobManager;
+        return Game.Inst.data.jobManager;
     }
 
     public Job GetJobForEntity(Entity entity) {
@@ -12,7 +12,7 @@ public class JobManager {
     }
 
     public void InterruptAllJobs() {
-        foreach (Entity entity in Game.Inst.entities) {
+        foreach (Entity entity in Game.Inst.data.entities) {
             if (entity.currentJob != null) {
                 entity.currentJob.Interrupt();
                 entity.currentJob = null;

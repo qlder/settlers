@@ -1,35 +1,17 @@
 using UnityEngine;
 
+[System.Serializable]
 public class Map {
 
     public const int TERRAIN_SIZE = 128;
     public Tile[,] tiles;
     public TileCorner[,] tileCorners;
 
-    public int terrainsLength { get; private set; }
-    public int tileLength { get; private set; }
+    public int terrainsLength;
+    public int tileLength;
 
     public static Map Inst() {
-        return Game.Inst.map;
-    }
-
-    public Map(GameOptions options) {
-        this.tileLength = TERRAIN_SIZE * options.mapSize;
-        tiles = new Tile[tileLength, tileLength];
-        tileCorners = new TileCorner[tileLength + 1, tileLength + 1];
-        terrainsLength = options.mapSize;
-
-        for (int x = 0; x < tileLength; x++) {
-            for (int z = 0; z < tileLength; z++) {
-                tiles[x, z] = new Tile(x, z);
-            }
-        }
-
-        for (int x = 0; x < tileLength + 1; x++) {
-            for (int z = 0; z < tileLength + 1; z++) {
-                tileCorners[x, z] = new TileCorner(x, z, 0);
-            }
-        }
+        return Game.Inst.data.map;
     }
 
     public Tile GetRandomNearbyTile(Tile currentTile, int minDistance, int maxDistance) {

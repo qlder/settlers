@@ -1,16 +1,11 @@
 using UnityEngine;
 
+[System.Serializable]
 public class TileCorner {
 
-    public int X { get; private set; }
-    public int Z { get; private set; }
-    public int H { get; private set; }
-
-    public TileCorner(int x, int z, int h) {
-        X = x;
-        Z = z;
-        H = h;
-    }
+    public int X;
+    public int Z;
+    public int H;
 
     public static TileCorner Get(int x, int z) {
         return Map.Inst().tileCorners[x, z] ?? null;

@@ -18,7 +18,7 @@ public class EntityRenderer : MonoBehaviour {
     }
 
     void Initialize() {
-        foreach (Entity entity in Game.Inst.entities) {
+        foreach (Entity entity in Game.Inst.data.entities) {
             InstantiateHuman(entity);
         }
     }
@@ -36,7 +36,7 @@ public class EntityRenderer : MonoBehaviour {
     }
 
     void Update() {
-        foreach (Entity entity in Game.Inst.entities) {
+        foreach (Entity entity in Game.Inst.data.entities) {
             if (entityObjects.ContainsKey(entity)) {
                 GameObject humanObject = entityObjects[entity];
                 humanObject.transform.position = entity.currentPosition.GetVector3();
@@ -51,7 +51,7 @@ public class EntityRenderer : MonoBehaviour {
         style.fontSize = 14;
         style.normal.textColor = Color.white;
         style.alignment = TextAnchor.MiddleCenter;
-        foreach (Entity entity in Game.Inst.entities) {
+        foreach (Entity entity in Game.Inst.data.entities) {
             if (entityObjects != null && entityObjects.ContainsKey(entity)) {
                 GameObject humanObject = entityObjects[entity];
                 string debugText = "";

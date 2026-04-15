@@ -14,6 +14,16 @@ public class Controller {
             JobManager.Inst().InterruptAllJobs();
         }
 
+        if (Keyboard.current.pKey.wasPressedThisFrame) {
+            Debug.Log("P key was pressed.");
+            Game.Inst.data.Save("savefile.json");
+        }
+
+        if (Keyboard.current.lKey.wasPressedThisFrame) {
+            Debug.Log("L key was pressed.");
+            GameData.Load("savefile.json");
+        }
+
     }
 
 
