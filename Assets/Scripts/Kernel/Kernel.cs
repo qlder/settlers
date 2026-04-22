@@ -5,9 +5,15 @@ public class Kernel : MonoBehaviour {
 
     void OnEnable() {
         GameOptions gameOptions = new GameOptions();
-        Game game = new Game(gameOptions);
+        gameOptions.seed = 12345;
+        gameOptions.mapSize = 100;
+
+
+        Game game = new Game();
         Game.Inst = game;
-        GameGenerator.Generate(game);
+
+        GameGenerator generator = new GameGenerator();
+        generator.Generate(game, gameOptions);
     }
 
     private float tickInterval = 0.01f;
@@ -21,7 +27,9 @@ public class Kernel : MonoBehaviour {
             accumulator -= tickInterval;
             ticks++;
         }
-        Game.Inst.Tick(ticks);
+        if (ticks > 0) {
+            Game.Inst.Tick(ticks);
+        }
         frameCount++;
     }
 

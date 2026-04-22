@@ -1,13 +1,20 @@
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using Unity.Mathematics;
+using Unity.VisualScripting;
 
-public class Human : Entity {
+public struct Human : IModel, ILiving {
 
-    // public static Human CreateHuman(Human father, Human mother) {
-    //     Human human = new Human();
-    //     human.name = $"Human_{System.Guid.NewGuid().ToString().Substring(0, 8)}";
-    //     return human;
-    // }
+    public static Human Get(long id) {
+        return Game.Inst.data.humanData.Humans[id];
+    }
 
+    public long Id { get; set; }
+    public string Name;
+    public Sex sex { get; set; }
+    public float2? position { get; set; }
 
+    public Hair hairStyle;
 
 }

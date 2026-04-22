@@ -1,21 +1,29 @@
 using System;
 using UnityEngine;
+using Unity.Mathematics;
 
 public class MapGenerator {
 
-    public static void Generate(Game game) {
+    public void Generate(Game game) {
         GenerateTerrain(game);
     }
 
-    private static void GenerateTerrain(Game game) {
-        Map map = game.data.map;
-        int cornerLength = map.tileLength + 1;
+    private void GenerateTerrain(Game game) {
+        MapData mapData = new MapData();
+        game.data.mapData = mapData;
 
-        for (int x = 0; x < cornerLength; x++) {
-            for (int z = 0; z < cornerLength; z++) {
-                TileCorner corner = TileCorner.Get(x, z);
-                corner.SetHeight(Mathf.RoundToInt(Mathf.PerlinNoise(x * 0.01f, z * 0.01f) * 10f));
-                corner.SetHeight(1);
+
+        int mapSize = game.data.gameOptions.mapSize;
+        for (int x = 0; x < mapSize; x++) {
+            for (int z = 0; z < mapSize; z++) {
+                Tile tile = new Tile();
+                tile.key = $"{x}_{z}";
+                tile.position = new int2(x, z);
+                tile.groundType = GroundType.Earth;
+                if (x < mapSize / 4 || x > mapSize * 3 / 4 || z < mapSize / 4 || z > mapSize * 3 / 4) {
+                    tile.groundType = GroundType.Water;
+                }
+                mapData.tiles[tile.key] = tile;
             }
         }
     }

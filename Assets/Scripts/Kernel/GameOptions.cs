@@ -1,14 +1,10 @@
 using UnityEngine;
 
 [System.Serializable]
-public class GameOptions {
-
+public struct GameOptions
+{
 
     public int seed;
-    public int mapSize = 10;
-
-    public GameOptions() {
-        seed = 1234;
-    }
+    public int mapSize;
 
 }
