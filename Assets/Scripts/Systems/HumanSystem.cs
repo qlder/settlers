@@ -11,15 +11,15 @@ public class HumanSystem {
         foreach (long id in HumanData.Inst().Humans.Keys.ToList()) {
             var human = HumanData.Inst().Humans[id];
             if (human.position == null) continue;
-            int moves = 0;
-            for (int i = 0; i < ticks; i++) {
-                if (Game.Random().NextDouble() < 0.1) {
-                    moves++;
-                }
-            }
+            int moves = 1;
+            // for (int i = 0; i < ticks; i++) {
+            //     if (RngData.Inst().Float01() < 0.1f) {
+            //         moves++;
+            //     }
+            // }
             float2 position = human.position.Value;
-            float diffX = (float)Game.Random().NextDouble() * 2f - 1f;
-            float diffY = (float)Game.Random().NextDouble() * 2f - 1f;
+            float diffX = Rng.Inst().Float(-1f, 1f) * 0.05f;
+            float diffY = Rng.Inst().Float(-1f, 1f) * 0.05f;
             position += new float2(diffX, diffY) * moves;
             human.position = position;
             HumanData.Inst().Humans[id] = human;

@@ -1,4 +1,6 @@
 using UnityEngine;
+using Unity.Mathematics;
+using System.Collections.Generic;
 
 public class HumanMono : MonoBehaviour {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -18,11 +20,20 @@ public class HumanMono : MonoBehaviour {
     [SerializeField]
     private SpriteRenderer beardRend;
 
+    private List<SpriteRenderer> allRends = new();
+
     [TextArea(10, 10)]
     public string debugText;
 
     public void OnEnable() {
-
+        allRends.Clear();
+        allRends.Add(bodyRend);
+        allRends.Add(faceRend);
+        allRends.AddRange(handRends);
+        allRends.Add(hairRend);
+        allRends.Add(eyesRend);
+        allRends.Add(moustacheRend);
+        allRends.Add(beardRend);
     }
 
 
@@ -32,7 +43,12 @@ public class HumanMono : MonoBehaviour {
         Human human = Human.Get(id).Value;
         HumanDNA humanDna = HumanDNA.Get(id).Value;
 
+        float posY = human.position.Value.y;
 
+        int sortingOrder = (int)(-posY * 100) + 1000000;
+        foreach (var rend in allRends) {
+            rend.sortingOrder = sortingOrder;
+        }
 
         debugText = $"Human ID: {id}\n" +
                     $"Name: {human.Name}\n";

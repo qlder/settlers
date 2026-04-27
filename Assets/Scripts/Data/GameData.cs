@@ -10,6 +10,7 @@ public class GameData {
     }
 
     public long nextId = 1;
+    public uint rngState = 0; // Will be set by Rng class.
 
     public GameOptions gameOptions = new();
     public MapData mapData = new();

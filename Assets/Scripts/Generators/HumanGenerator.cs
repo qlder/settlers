@@ -20,7 +20,7 @@ public class HumanGenerator {
             HumanFactory humanFactory = new HumanFactory();
             humanFactory.sex = (Sex)(i % 2);
 
-            float2 position = MapData.Inst().tiles.Values.Where(t => t.groundType == GroundType.Earth).ToList().GetRandom(Game.Random()).Center;
+            float2 position = MapData.Inst().tiles.Values.Where(t => t.groundType == GroundType.Earth).ToList().GetRandom().Center;
             humanFactory.SetPosition(position);
 
             Human human = humanFactory.Spawn(game.data);

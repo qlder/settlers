@@ -33,7 +33,7 @@ public struct HumanFactory {
         if (sex != null) {
             human.sex = sex.Value;
         } else {
-            human.sex = (Sex)Game.Random().Next(0, 2);
+            human.sex = Rng.Inst().EnumValue<Sex>();
         }
         if (name != null) {
             human.Name = name;
@@ -49,16 +49,16 @@ public struct HumanFactory {
 
         HumanDNA humanDna = new HumanDNA();
         humanDna.Id = human.Id;
-        humanDna.hairHue = (float)Game.Random().NextDouble();
-        humanDna.hairSat = (float)Game.Random().NextDouble();
-        humanDna.hairDark = (float)Game.Random().NextDouble();
-        humanDna.skinHue = (float)Game.Random().NextDouble();
-        humanDna.skinSat = (float)Game.Random().NextDouble();
-        humanDna.skinDark = (float)Game.Random().NextDouble();
+        humanDna.hairHue = Rng.Inst().Float01();
+        humanDna.hairSat = Rng.Inst().Float01();
+        humanDna.hairDark = Rng.Inst().Float01();
+        humanDna.skinHue = Rng.Inst().Float01();
+        humanDna.skinSat = Rng.Inst().Float01();
+        humanDna.skinDark = Rng.Inst().Float01();
 
-        humanDna.eyeType = Game.Random().GetRandomValue<HumanDNA.EyeType>();
-        humanDna.bodyType = Game.Random().GetRandomValue<HumanDNA.BodyType>();
-        humanDna.faceType = Game.Random().GetRandomValue<HumanDNA.FaceType>();
+        humanDna.eyeType = Rng.Inst().EnumValue<HumanDNA.EyeType>();
+        humanDna.bodyType = Rng.Inst().EnumValue<HumanDNA.BodyType>();
+        humanDna.faceType = Rng.Inst().EnumValue<HumanDNA.FaceType>();
 
         Debug.Log($"Spawned human with DNA: eyeType={humanDna.eyeType}, bodyType={humanDna.bodyType}, faceType={humanDna.faceType}");
 
@@ -67,17 +67,17 @@ public struct HumanFactory {
 
         Hair hair = new Hair();
         hair.Id = human.Id;
-        hair.style = Game.Random().GetRandomValue<Hair.HairStyle>();
+        hair.style = Rng.Inst().EnumValue<Hair.HairStyle>();
         hair.Save();
 
         if (human.sex == Sex.Male) {
             Moustache moustache = new Moustache();
             moustache.Id = human.Id;
-            moustache.style = Game.Random().GetRandomValue<Moustache.MoustacheStyle>();
+            moustache.style = Rng.Inst().EnumValue<Moustache.MoustacheStyle>();
             moustache.Save();
             Beard beard = new Beard();
             beard.Id = human.Id;
-            beard.style = Game.Random().GetRandomValue<Beard.BeardStyle>();
+            beard.style = Rng.Inst().EnumValue<Beard.BeardStyle>();
             beard.Save();
         }
 
