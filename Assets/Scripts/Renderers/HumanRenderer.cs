@@ -3,14 +3,26 @@ using Unity.Mathematics;
 using UnityEngine;
 
 public class HumanRenderer : MonoBehaviour {
-    [Header("Rendering")]
-    [SerializeField] private Sprite humanSprite;
-    [SerializeField] private Vector2 spriteOffset = Vector2.zero;
-    [SerializeField] private string sortingLayerName = "Default";
-    [SerializeField] private int sortingOrder = 0;
+
+    private GameObject humanPrefab;
+
+    static public HumanRenderer Inst { get; private set; }
+
 
     // Replace int with whatever key type Game.inst.data.Humans uses
-    private readonly Dictionary<long, SpriteRenderer> _renderers = new();
+    private readonly Dictionary<long, HumanMono> humanMonos = new();
+    public Dictionary<string, Sprite> humanSprites; // Assign in inspector or load at runtime
+
+    void OnEnable() {
+        humanPrefab = Resources.Load<GameObject>("Human/Human");
+        var sprites = Resources.LoadAll<Sprite>("Human/Sprites");
+        humanSprites = new Dictionary<string, Sprite>();
+        foreach (var sprite in sprites) {
+            Debug.Log($"Loaded sprite: {sprite.name}");
+            humanSprites[sprite.name] = sprite;
+        }
+        HumanRenderer.Inst = this;
+    }
 
     private void Update() {
         if (Game.Inst == null || Game.Inst.data == null || Game.Inst.data.humanData.Humans == null)
@@ -29,32 +41,31 @@ public class HumanRenderer : MonoBehaviour {
 
             // 🚫 No position → ensure renderer is removed
             if (!human.position.HasValue) {
-                Debug.Log($"Removing renderer for Human {id} due to missing position: {human.position}");
-                if (_renderers.TryGetValue(id, out var existing) && existing != null) {
+                if (humanMonos.TryGetValue(id, out var existing) && existing != null) {
                     Destroy(existing.gameObject);
                 }
 
-                _renderers.Remove(id);
+                humanMonos.Remove(id);
                 continue;
             }
 
             float2 pos = human.position.Value;
 
             // ✅ Create if missing (or destroyed)
-            if (!_renderers.TryGetValue(id, out var sr) || sr == null) {
-                Debug.Log($"Creating renderer for Human {id} at position {pos}");
-                sr = CreateRendererObject(id);
-                _renderers[id] = sr;
+            if (!humanMonos.TryGetValue(id, out var mono) || mono == null) {
+                mono = CreateMonoObject(id);
+                humanMonos[id] = mono;
             }
 
             // ✅ Update position
-            UpdateRendererPosition(sr, pos);
+            UpdateRendererPosition(mono, pos);
+            UpdateMono(mono, human);
         }
 
         // Remove deleted humans
         List<long> toRemove = null;
 
-        foreach (var pair in _renderers) {
+        foreach (var pair in humanMonos) {
             if (!humans.ContainsKey(pair.Key)) {
                 toRemove ??= new List<long>();
                 toRemove.Add(pair.Key);
@@ -63,34 +74,35 @@ public class HumanRenderer : MonoBehaviour {
 
         if (toRemove != null) {
             foreach (var id in toRemove) {
-                if (_renderers.TryGetValue(id, out var sr) && sr != null) {
+                if (humanMonos.TryGetValue(id, out var sr) && sr != null) {
                     Destroy(sr.gameObject);
                 }
 
-                _renderers.Remove(id);
+                humanMonos.Remove(id);
             }
         }
     }
 
-    private SpriteRenderer CreateRendererObject(long id) // change type if needed
+    private HumanMono CreateMonoObject(long id) // change type if needed
     {
-        var go = new GameObject($"Human_{id}");
+        var go = GameObject.Instantiate(humanPrefab);
+
+        go.name = $"Human_{id}";
         go.transform.SetParent(transform, false);
         go.transform.localRotation = Quaternion.Euler(90, 0, 0);
-
-        var sr = go.AddComponent<SpriteRenderer>();
-        sr.sprite = humanSprite;
-        sr.sortingLayerName = sortingLayerName;
-        sr.sortingOrder = sortingOrder;
-
-        return sr;
+        var humanMono = go.GetComponent<HumanMono>();
+        return humanMono;
     }
 
-    private void UpdateRendererPosition(SpriteRenderer sr, float2 pos) {
+    private void UpdateRendererPosition(HumanMono sr, float2 pos) {
         sr.transform.position = new Vector3(
-            pos.x + spriteOffset.x,
+            pos.x,
             0f,
-            pos.y + spriteOffset.y
+            pos.y
         );
+    }
+
+    private void UpdateMono(HumanMono mono, Human human) {
+        mono.UpdateVisuals(human.Id);
     }
 }

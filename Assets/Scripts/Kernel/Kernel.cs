@@ -3,6 +3,7 @@ using UnityEngine;
 public class Kernel : MonoBehaviour {
 
 
+
     void OnEnable() {
         GameOptions gameOptions = new GameOptions();
         gameOptions.seed = 12345;
@@ -14,6 +15,9 @@ public class Kernel : MonoBehaviour {
 
         GameGenerator generator = new GameGenerator();
         generator.Generate(game, gameOptions);
+
+        Controller controller = new Controller();
+        Controller.Inst = controller;
     }
 
     private float tickInterval = 0.01f;
@@ -21,6 +25,10 @@ public class Kernel : MonoBehaviour {
     private int frameCount;
 
     void Update() {
+
+        Controller.Inst.DealWithInput();
+
+
         accumulator += Time.deltaTime;
         int ticks = 0;
         while (accumulator >= tickInterval) {

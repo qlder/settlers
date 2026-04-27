@@ -6,11 +6,15 @@
 	<dict>
 		<key>Resources/Data/Managed/Assembly-CSharp.dll</key>
 		<data>
-		WBlZ9ofHibuhYt5zkRujET7pvxc=
+		6tC+OStsMmXRZmX9dscJ++roetg=
 		</data>
 		<key>Resources/Data/Managed/Mono.Security.dll</key>
 		<data>
 		ZNimluDdyQXXmxO3G+vJAYFdgys=
+		</data>
+		<key>Resources/Data/Managed/Newtonsoft.Json.dll</key>
+		<data>
+		wXB7F99jbNbUqAQ2H8bq1O+dtc8=
 		</data>
 		<key>Resources/Data/Managed/System.ComponentModel.Composition.dll</key>
 		<data>
@@ -102,7 +106,7 @@
 		</data>
 		<key>Resources/Data/Managed/Unity.AI.Navigation.dll</key>
 		<data>
-		l2bfkh2Yl246MjlDaUsOMfYx7tw=
+		dYmFDZqbGGpvjRsREsp8y8zX0fg=
 		</data>
 		<key>Resources/Data/Managed/Unity.Burst.Unsafe.dll</key>
 		<data>
@@ -118,79 +122,79 @@
 		</data>
 		<key>Resources/Data/Managed/Unity.Collections.dll</key>
 		<data>
-		6ko2o5hkVVMCNQX8A6ZwM5o6/d0=
+		8dze3FVeMcC4vtyQzsL/GO05LWs=
 		</data>
 		<key>Resources/Data/Managed/Unity.InputSystem.ForUI.dll</key>
 		<data>
-		hrZkCc+Jmnly8InD2sJkW/2DGyY=
+		q8FNWFb5Xo6cboOFLKKS7JDcAO8=
 		</data>
 		<key>Resources/Data/Managed/Unity.InputSystem.dll</key>
 		<data>
-		8mMDb18u3B5pod39N106P2jQpXM=
+		+3aO6EBDYhpm/k2cXz/i8v3XZK4=
 		</data>
 		<key>Resources/Data/Managed/Unity.InternalAPIEngineBridge.004.dll</key>
 		<data>
-		2ZjxD8z2yZCEQUWf1jYyJ4zOlew=
+		FRQHsgcM3UJPH85mBIJaJLznePk=
 		</data>
 		<key>Resources/Data/Managed/Unity.Mathematics.dll</key>
 		<data>
-		eUgScCrDRHJP4AHDEM3ZjbAzOkw=
+		0ILmlpOiObEYJlyf1inJsBUxHog=
 		</data>
 		<key>Resources/Data/Managed/Unity.Multiplayer.Center.Common.dll</key>
 		<data>
-		0jK29nJoVg7WcfeG21dRg7i4/yc=
+		V3K5BNVlDnauRbGka6k4js6xZAE=
 		</data>
 		<key>Resources/Data/Managed/Unity.RenderPipeline.Universal.ShaderLibrary.dll</key>
 		<data>
-		a3wksYXyIdMp4kkbqK3NjYawiJM=
+		ri0rpwvFXvMUmgjLJRXi96xvxrY=
 		</data>
 		<key>Resources/Data/Managed/Unity.RenderPipelines.Core.Runtime.Shared.dll</key>
 		<data>
-		wN0P3vZ7KgkB5kGucVCtgzRHI3g=
+		qGr67eiNhx2ErO+A/ktayzPjz1k=
 		</data>
 		<key>Resources/Data/Managed/Unity.RenderPipelines.Core.Runtime.dll</key>
 		<data>
-		7R3cPc+2b+S5byGihlClGGpyFvc=
+		ERSvdJjBNrE8L3IgXojQ6lz5a64=
 		</data>
 		<key>Resources/Data/Managed/Unity.RenderPipelines.Core.ShaderLibrary.dll</key>
 		<data>
-		bd2TtU6msYPPyiPMWJCPo+vny9I=
+		pRc/xzEvYdEP82FuWbO28TyxdNw=
 		</data>
 		<key>Resources/Data/Managed/Unity.RenderPipelines.GPUDriven.Runtime.dll</key>
 		<data>
-		6TkBp0owbjfKqTdYWpyMJJAx3pc=
+		ViQNNIWj2ktuPV5gZJMy925i/7U=
 		</data>
 		<key>Resources/Data/Managed/Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary.dll</key>
 		<data>
-		z6MMDymos7npp+z+E7yg4u/DfJE=
+		ugQLeJ1PeElzD32AibU+peEn59U=
 		</data>
 		<key>Resources/Data/Managed/Unity.RenderPipelines.Universal.2D.Runtime.dll</key>
 		<data>
-		NgOeLv59MSmLSFx/0HCaCzj/bIw=
+		OqEIGoPvEBgHcivvSW0KtCA+yGE=
 		</data>
 		<key>Resources/Data/Managed/Unity.RenderPipelines.Universal.Config.Runtime.dll</key>
 		<data>
-		/rx5OjQfXIGSbPfkoFu6SjBGMFw=
+		GKXdSwvK4IVH/0B9hLCvTDe69l4=
 		</data>
 		<key>Resources/Data/Managed/Unity.RenderPipelines.Universal.Runtime.dll</key>
 		<data>
-		0fuKsS2ViALlzX2wVD24fJghm6M=
+		hLzc0ejLz8IN5dZqYYgkrDXb+UE=
 		</data>
 		<key>Resources/Data/Managed/Unity.RenderPipelines.Universal.Shaders.dll</key>
 		<data>
-		lzhJgvVdLePSFI47MVBmcyHfexg=
+		kTKDDVa/BJ/TUbiHuzpO35xdA+8=
 		</data>
 		<key>Resources/Data/Managed/Unity.TextMeshPro.dll</key>
 		<data>
-		l2uBpsua5hLpOXRScowYe8ieg54=
+		FOoyHC0jb9zuqm8c0VZSfvNi+es=
 		</data>
 		<key>Resources/Data/Managed/Unity.Timeline.dll</key>
 		<data>
-		NcDoyB1ISc4Is4KDgcYJZelsHqw=
+		h0Ufr/M2g9p22Fof4KYQqRigjQ4=
 		</data>
 		<key>Resources/Data/Managed/Unity.UnifiedRayTracing.Runtime.dll</key>
 		<data>
-		V7wT8WxjBVNV+xxmr9Hg6bYGNZA=
+		xhop5clgxN/8gHHNADrSL3+3MII=
 		</data>
 		<key>Resources/Data/Managed/Unity.VisualScripting.Antlr3.Runtime.dll</key>
 		<data>
@@ -198,7 +202,7 @@
 		</data>
 		<key>Resources/Data/Managed/Unity.VisualScripting.Core.dll</key>
 		<data>
-		4vzHDapZzmsgfC4HAMY2jjQqQto=
+		lroX1zD3V80HvEOfxT2n+Ux6hso=
 		</data>
 		<key>Resources/Data/Managed/Unity.VisualScripting.DocCodeExamples.dll</key>
 		<data>
@@ -206,11 +210,11 @@
 		</data>
 		<key>Resources/Data/Managed/Unity.VisualScripting.Flow.dll</key>
 		<data>
-		VmddaMN9ipHTGKirqX3XhTsRWHY=
+		tAlF9QPMAvfTOHpKbXJF/pxmmSY=
 		</data>
 		<key>Resources/Data/Managed/Unity.VisualScripting.State.dll</key>
 		<data>
-		mSiG6412BGV/qTvv6Y7Mgiz+lkM=
+		XtWbsdnlxtlthNImHKscxbqcf3w=
 		</data>
 		<key>Resources/Data/Managed/UnityEngine.AIModule.dll</key>
 		<data>
@@ -446,7 +450,7 @@
 		</data>
 		<key>Resources/Data/Managed/UnityEngine.UI.dll</key>
 		<data>
-		Lc8lsNe00xKFlmnFiH8J+Gkwn6I=
+		tva2FCkuTy1mrNQcOtRATPCN8mI=
 		</data>
 		<key>Resources/Data/Managed/UnityEngine.UIElementsModule.dll</key>
 		<data>
@@ -558,7 +562,7 @@
 		</data>
 		<key>Resources/Data/ScriptingAssemblies.json</key>
 		<data>
-		ZYvceT9ky2C2TSEAG5IcCXoH1fM=
+		6quQhXCjF5rIs/zzZDVeOkLp/rA=
 		</data>
 		<key>Resources/Data/app.info</key>
 		<data>
@@ -566,15 +570,15 @@
 		</data>
 		<key>Resources/Data/boot.config</key>
 		<data>
-		GC8JIC9eN1W0g31HjXo+nB1Pd5w=
+		wfb8uSjoNsjxyfmhPfjEgcR/m6I=
 		</data>
 		<key>Resources/Data/globalgamemanagers</key>
 		<data>
-		jttVqek8HhvYmiuFosANR/FQJB0=
+		9K0MGHXemi6QsuF0tLwwNtun9Qk=
 		</data>
 		<key>Resources/Data/globalgamemanagers.assets</key>
 		<data>
-		9wqt96INpchMpapH0AceO6EmILE=
+		GjtzJLPPKsrycLBwxqQgBlD61/w=
 		</data>
 		<key>Resources/Data/globalgamemanagers.assets.resS</key>
 		<data>
@@ -582,23 +586,23 @@
 		</data>
 		<key>Resources/Data/level0</key>
 		<data>
-		DIgrieE2jRUrVHZ+a5sbG+SAX+I=
+		rIRpLXLMHiTFw51RufgHstF3H6A=
 		</data>
 		<key>Resources/Data/resources.assets</key>
 		<data>
-		ONPLp+021/yCzgeTJOKV5QdNxxY=
+		iB7RC6ejDmbdC51++D5Y3wU10/Q=
 		</data>
 		<key>Resources/Data/resources.assets.resS</key>
 		<data>
-		8mmbSCNTgHH/dvOX9/Ocb4Olq2c=
+		12hEj8CD7lcXKgwwHUs4LcwSSu8=
 		</data>
 		<key>Resources/Data/sharedassets0.assets</key>
 		<data>
-		+IDk/2Q7Kwq0f3kPyQVDAwpJTmo=
+		hbm34olD2cb1yz+8kh2YXfxk2Sw=
 		</data>
 		<key>Resources/Data/sharedassets0.assets.resS</key>
 		<data>
-		yzrS8SDFmm6bFJwiOkFFdNysVCc=
+		xwRSrrhhxvRgwgSxygoGFA95CCc=
 		</data>
 		<key>Resources/DefaultPreferences.plist</key>
 		<data>
@@ -794,7 +798,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			AIijb+l/jRtCug9uG0F1ANPR6appcKzbIHjUXDIdIpA=
+			T3ljPVfqTk0X87oRPOhK4UE9NuXh9AbolZnh9mW7M3I=
 			</data>
 		</dict>
 		<key>Resources/Data/Managed/Mono.Security.dll</key>
@@ -802,6 +806,13 @@
 			<key>hash2</key>
 			<data>
 			qKAiuJAUFRe0cvmm7+gAQ14zusflMdQscLSOovjjJlw=
+			</data>
+		</dict>
+		<key>Resources/Data/Managed/Newtonsoft.Json.dll</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			pWFGICIylY9GvWootafaFmrqEj7g1kZzWkblw0Hfvx8=
 			</data>
 		</dict>
 		<key>Resources/Data/Managed/System.ComponentModel.Composition.dll</key>
@@ -962,7 +973,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			00Mt4gd1nzJAICI838bWky8Ot+oZuPxDJMCM+LS+8PU=
+			zKv3XXvaKd6KzKpvpivlwQ8B9YK1gWDBP5D9YviLMjM=
 			</data>
 		</dict>
 		<key>Resources/Data/Managed/Unity.Burst.Unsafe.dll</key>
@@ -990,133 +1001,133 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			z48HP7jhDqmuZuEFdsb/avhYwm7Q6eYUyaQkILVDk58=
+			TEaUWLdoXIbyL1ew52a5vTJagMA9/pLeIeIX1C4TLh4=
 			</data>
 		</dict>
 		<key>Resources/Data/Managed/Unity.InputSystem.ForUI.dll</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			PPQ8civV3srP61f/C8UQg9IwEXpbHj8G+MPPJCT0oig=
+			CxpHptqv5UiRLXH+Hj8MO9lZcPdOCu6LpdkbLUyAEDs=
 			</data>
 		</dict>
 		<key>Resources/Data/Managed/Unity.InputSystem.dll</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			dUlnWvwG2AjQvgkqgLf8a43cwmrv42ouxdTc070laCI=
+			xCK4+sVdO+gHm1780EM/X7taRYGsyVt+dOtCok1aZ6E=
 			</data>
 		</dict>
 		<key>Resources/Data/Managed/Unity.InternalAPIEngineBridge.004.dll</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			JF3vF58yumrxTlYeRzD4D8Xygt1mXVsvLM7KAb9T5f4=
+			E92Z0MJ8xAMfoJpljH4iE3Vjjur8ttmt/HJWdTrTGa4=
 			</data>
 		</dict>
 		<key>Resources/Data/Managed/Unity.Mathematics.dll</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			ouAp97oqlCMkEwrr1CRdz2blt2ZEM29usvdV2yl8PPw=
+			Q2wwVOikLPIjtYIX+YZN2et1EonJQrS0lLquc5wMmPQ=
 			</data>
 		</dict>
 		<key>Resources/Data/Managed/Unity.Multiplayer.Center.Common.dll</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			LrZ1EiXV3akn8rA4+szN6XdZbBJWPYcpEaNCYsypF24=
+			pKBJyjqrbyowqwTNbCB0Xf68ieFpdOLLGyOkqAVriNQ=
 			</data>
 		</dict>
 		<key>Resources/Data/Managed/Unity.RenderPipeline.Universal.ShaderLibrary.dll</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			dw7uvPTOPb70HWSkxnQWrk/ILAC654yMWwBXQthWQ6M=
+			ELtpnKh5I24DoWbM9PA93Iqbidxp4cxYmmjenYWSR54=
 			</data>
 		</dict>
 		<key>Resources/Data/Managed/Unity.RenderPipelines.Core.Runtime.Shared.dll</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			SeymH9POlAH92mYuJWNeaVbltEaIsP37u0M6gWXqeJE=
+			ccVhMTAxbVSTOWX6bBeog4f8Tx5BhB/zEOCmmOWk6RE=
 			</data>
 		</dict>
 		<key>Resources/Data/Managed/Unity.RenderPipelines.Core.Runtime.dll</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			CE0EneEb5zetQyS1BHcUnTOFwdadOplr7Zru2hnwlNc=
+			UP3F3JVt6+qHdGy07f+EULJKj9XTbIciXoRxbUubb5k=
 			</data>
 		</dict>
 		<key>Resources/Data/Managed/Unity.RenderPipelines.Core.ShaderLibrary.dll</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			B6V9ryqmXwP8T31+B0noLemkxQyVa4wFTqrz5s7VGMQ=
+			dmLUu6VTqQXhdArz7ThcqLUr2xIIek6YTLC98E9BcBg=
 			</data>
 		</dict>
 		<key>Resources/Data/Managed/Unity.RenderPipelines.GPUDriven.Runtime.dll</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			L/tdXsE/MBWFR/PmFUFZgczpjM0au9ltLq+vdaRHz6o=
+			kj4/VVPhXXc2WUAzHP7EgL53QW9iNjgyV1hD6TxBfXE=
 			</data>
 		</dict>
 		<key>Resources/Data/Managed/Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary.dll</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			axqodErgm4jrdWZ3UCgfGdhZdAVeZ9Y87+Bh2YVowWQ=
+			ar3xMMNGOnaoOhIApBt7ji8FAqAfdyGIvx2rh1zRTc4=
 			</data>
 		</dict>
 		<key>Resources/Data/Managed/Unity.RenderPipelines.Universal.2D.Runtime.dll</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			X9+mBL5RWgPhK2oBOocbK5owqq8SCSrx5jSZn8ZpQxw=
+			M8Qs9bY1TfpJlg5IvLG7g/MCoKtmOyxFwd8Kqe8jLtY=
 			</data>
 		</dict>
 		<key>Resources/Data/Managed/Unity.RenderPipelines.Universal.Config.Runtime.dll</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			lt+GoKZMohYf5Coq8TMMxfYpHecnpR2XSUCEDMpUvCg=
+			ds/4sa1VP/qYJ7Ek3LH7MnCTxjALBUG3oiuabmhPQxE=
 			</data>
 		</dict>
 		<key>Resources/Data/Managed/Unity.RenderPipelines.Universal.Runtime.dll</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			1N3SpMxhQ9Kw699y/dj3QK2nB/LtWwkwkNGWfYDkEio=
+			kSJjAXOu7pmCOWqKj4uPHoelc7rB3pkddvxOYpkKSg8=
 			</data>
 		</dict>
 		<key>Resources/Data/Managed/Unity.RenderPipelines.Universal.Shaders.dll</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			qjgRvA1gBh0CpqMAH2dlaXcmBGfE4wljOjqENUuOGH8=
+			cCgjkaLksP1rVZDF/ivedVXrR9IliRczXHeHWY+INfk=
 			</data>
 		</dict>
 		<key>Resources/Data/Managed/Unity.TextMeshPro.dll</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			Zwr6lKo71uoQIrHxvVY9XeiUB06teTUSEhY1dQ05m9k=
+			nwU48FPs+n+VNKx8kKAQyREG2w04/bTbUS+62lPZolE=
 			</data>
 		</dict>
 		<key>Resources/Data/Managed/Unity.Timeline.dll</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			mNbMWCPGbAAjJ7mbkkBvKufk0G9cYhsIM4GAJG7GwjQ=
+			oLDeWMcH1BKpdXrWNQt5xh8lidDXOXuelesmYeK8rXE=
 			</data>
 		</dict>
 		<key>Resources/Data/Managed/Unity.UnifiedRayTracing.Runtime.dll</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			6zTp0oGhoiyaOSd5njDXqIop5FBW8viZtXMxIJSgTyI=
+			dJehdsVesOF9PJrVfqsGKL/0ukodprX6qRy329mrrN8=
 			</data>
 		</dict>
 		<key>Resources/Data/Managed/Unity.VisualScripting.Antlr3.Runtime.dll</key>
@@ -1130,7 +1141,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			2syeM6QOCFhaeDmR6fOTlaBehrh208rmU1VdcYNLNek=
+			fkTpkh+Im3ZXB/sueL1N1WDK8nw/mU45jnP2bbsxfFg=
 			</data>
 		</dict>
 		<key>Resources/Data/Managed/Unity.VisualScripting.DocCodeExamples.dll</key>
@@ -1144,14 +1155,14 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			wsRKHstNCCYoZq2Ya143wYHMt15fY9MKwYlX6mAPgN0=
+			1vxQQLuTJIJ1k4YVBb3QZj/IXKVG5ioWY8dvER/VRMQ=
 			</data>
 		</dict>
 		<key>Resources/Data/Managed/Unity.VisualScripting.State.dll</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			29k7V7ZNLYqhJZJdITGjCUijCCTx8TkHwL94Sp81M6E=
+			QtMHn0Fh4lMEfmYtpZlmhMy/0qC3LGLD2yfmUPpNZaQ=
 			</data>
 		</dict>
 		<key>Resources/Data/Managed/UnityEngine.AIModule.dll</key>
@@ -1564,7 +1575,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			lT6avV1PoRr8N1Vl4DTYS+1U9UJpEPk1wD+BE4BmHXM=
+			ALriJD6KvjDpjJQQsMS9+32lxkTGGFoIeG0VqrlXTsI=
 			</data>
 		</dict>
 		<key>Resources/Data/Managed/UnityEngine.UIElementsModule.dll</key>
@@ -1760,7 +1771,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			qh0NEqOiy/Eka1T+xWqZaHCd9pJKdfWBazRNjiynab4=
+			H4kCMRpwtP+EjUm4/YsW1qqnoGJyScFHVnfptOoaBeQ=
 			</data>
 		</dict>
 		<key>Resources/Data/app.info</key>
@@ -1774,21 +1785,21 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			OTr7dSKjWdWfllsJ+jRfJ9MV/RXTXDCZLIjSgUgvAY0=
+			wp2U277/8fwJ/iDNqeAF/ToUQ/6qhcXa9C/VC3T1VjU=
 			</data>
 		</dict>
 		<key>Resources/Data/globalgamemanagers</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			7NqFEfrJHTrFXexGRQgW5R1HE/mdCXry7HXGiyCDVow=
+			tTETWsqal94hnMKjhvuKlMKopUF2hufEKRGGHSoEnFQ=
 			</data>
 		</dict>
 		<key>Resources/Data/globalgamemanagers.assets</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			Et6ZOQewLsuXzcpAKrQQ9DtjVBMqUP1OgzFQCBYKU3M=
+			u2koz6cL6oGyHldYZOj2QpqdQXimv9izST5ig1uhA+Y=
 			</data>
 		</dict>
 		<key>Resources/Data/globalgamemanagers.assets.resS</key>
@@ -1802,35 +1813,35 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			HqP/ZU7PxPaQi+rjqtXbydiuAm6abdnw7n85SdKkFFc=
+			0KP9UjuW5CimRsQV4/OPRAwD+0tqrq8eEuGNcTHNIFc=
 			</data>
 		</dict>
 		<key>Resources/Data/resources.assets</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			cK3aZcaacQyDRXJZhT1A8Snt9syZ5DEFfufDwgWwWlQ=
+			ZZuGqOypJIkjmifP/bwAK9ORU5Th407bFSG6Uuf90Q0=
 			</data>
 		</dict>
 		<key>Resources/Data/resources.assets.resS</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			gI8CBWoEJheUzYzPDaQYOc913aYhNKJ+t2LzrGopMiU=
+			C14P3diDXormNHbbWxf17afWDtEMETJeJy6ukWG0XtA=
 			</data>
 		</dict>
 		<key>Resources/Data/sharedassets0.assets</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			Z+RRDMIiywS/Yn34HfvlSsiBazZykZxbIa/rX9SgxVc=
+			xtjOwBINvk9eVVNV/dw48WnA8iE9U8iH2KGoSi/lsNE=
 			</data>
 		</dict>
 		<key>Resources/Data/sharedassets0.assets.resS</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			z244oN5UHJlFGtUKljRHIDZRqqMPoz/VzJmmyhLgyWg=
+			uiPqVgZxO55ztym76UPCZQQ5koypwMFGU1Vnqf6Bvk4=
 			</data>
 		</dict>
 		<key>Resources/DefaultPreferences.plist</key>

@@ -5,7 +5,7 @@ using System.Xml.Serialization;
 
 public class GameSystem {
 
-    HumanSystem humanSystem = new();
+    public HumanSystem humanSystem = new();
 
     public static GameSystem Inst() {
         return Game.Inst.system;

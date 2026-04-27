@@ -16,7 +16,7 @@ public class HumanGenerator {
 
 
         List<Human> firstGen = new();
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 1000; i++) {
             HumanFactory humanFactory = new HumanFactory();
             humanFactory.sex = (Sex)(i % 2);
 

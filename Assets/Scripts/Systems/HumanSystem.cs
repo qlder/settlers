@@ -18,8 +18,8 @@ public class HumanSystem {
                 }
             }
             float2 position = human.position.Value;
-            float diffX = (float)Game.Random().NextDouble() * 0.2f - 0.1f;
-            float diffY = (float)Game.Random().NextDouble() * 0.2f - 0.1f;
+            float diffX = (float)Game.Random().NextDouble() * 2f - 1f;
+            float diffY = (float)Game.Random().NextDouble() * 2f - 1f;
             position += new float2(diffX, diffY) * moves;
             human.position = position;
             HumanData.Inst().Humans[id] = human;
