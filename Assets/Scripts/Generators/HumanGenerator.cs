@@ -18,7 +18,7 @@ public class HumanGenerator
         game.data.livingData = livingData;
 
 
-        List<Human> firstGen = new();
+        List<Entity> firstGen = new();
         for (int i = 0; i < 1000; i++)
         {
             HumanFactory humanFactory = new HumanFactory();
@@ -27,8 +27,8 @@ public class HumanGenerator
             float2 position = MapData.Inst().tiles.Values.Where(t => t.groundType == GroundType.Earth).ToList().GetRandom().Center;
             humanFactory.SetPosition(position);
 
-            Human human = humanFactory.Spawn(game.data);
-            Debug.Log($"Generated human {human.Name} with sex {human.sex} at position {position}");
+            Entity human = humanFactory.Spawn(game.data);
+            Debug.Log($"Generated human {i} with sex {human.sex} at position {position}");
             firstGen.Add(human);
         }
 

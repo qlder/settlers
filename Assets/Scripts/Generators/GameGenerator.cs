@@ -14,7 +14,7 @@ public class GameGenerator
         humanGenerator.Generate(game);
 
         Debug.Log("Game generated.");
-        Debug.LogWarning(game.data.livingData.Humans.Count);
+        Debug.LogWarning(game.data.livingData.Entities.Count);
     }
 
 }
