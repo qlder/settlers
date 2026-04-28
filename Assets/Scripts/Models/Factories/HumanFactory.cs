@@ -4,7 +4,8 @@ using Unity.Mathematics;
 using Unity.VisualScripting.Dependencies.NCalc;
 using UnityEngine;
 
-public struct HumanFactory {
+public struct HumanFactory
+{
 
 
     public Sex? sex;
@@ -15,32 +16,43 @@ public struct HumanFactory {
 
     float2? position;
 
-    public void SetFatherId(long fatherId) {
+    public void SetFatherId(long fatherId)
+    {
         this.fatherId = fatherId;
     }
 
-    public void SetMotherId(long motherId) {
+    public void SetMotherId(long motherId)
+    {
         this.motherId = motherId;
     }
 
-    public void SetPosition(float2 position) {
+    public void SetPosition(float2 position)
+    {
         this.position = position;
     }
 
-    public Human Spawn(GameData gameData) {
+    public Human Spawn(GameData gameData)
+    {
         Human human = new Human();
         human.Id = gameData.GetNextId();
-        if (sex != null) {
+        if (sex != null)
+        {
             human.sex = sex.Value;
-        } else {
+        }
+        else
+        {
             human.sex = Rng.Inst().EnumValue<Sex>();
         }
-        if (name != null) {
+        if (name != null)
+        {
             human.Name = name;
-        } else {
+        }
+        else
+        {
             human.Name = $"Human {human.Id}";
         }
-        if (position != null) {
+        if (position != null)
+        {
             human.position = position.Value;
         }
 
@@ -70,7 +82,8 @@ public struct HumanFactory {
         hair.style = Rng.Inst().EnumValue<Hair.HairStyle>();
         hair.Save();
 
-        if (human.sex == Sex.Male) {
+        if (human.sex == Sex.Male)
+        {
             Moustache moustache = new Moustache();
             moustache.Id = human.Id;
             moustache.style = Rng.Inst().EnumValue<Moustache.MoustacheStyle>();
@@ -82,11 +95,13 @@ public struct HumanFactory {
         }
 
 
-        if (this.motherId != null) {
-            gameData.humanData.Mothers.SetOwnerOf(human.Id, motherId.Value);
+        if (this.motherId != null)
+        {
+            gameData.livingData.Mothers.SetOwnerOf(human.Id, motherId.Value);
         }
-        if (this.fatherId != null) {
-            gameData.humanData.Fathers.SetOwnerOf(human.Id, fatherId.Value);
+        if (this.fatherId != null)
+        {
+            gameData.livingData.Fathers.SetOwnerOf(human.Id, fatherId.Value);
         }
 
         return human;

@@ -3,9 +3,11 @@ using UnityEngine;
 using Newtonsoft.Json;
 
 [System.Serializable]
-public class GameData {
+public class GameData
+{
 
-    public static GameData Inst() {
+    public static GameData Inst()
+    {
         return Game.Inst.data;
     }
 
@@ -14,10 +16,11 @@ public class GameData {
 
     public GameOptions gameOptions = new();
     public MapData mapData = new();
-    public HumanData humanData = new();
+    public LivingData livingData = new();
+    public JobData jobData = new();
 
-
-    public long GetNextId() {
+    public long GetNextId()
+    {
         return nextId++;
     }
 

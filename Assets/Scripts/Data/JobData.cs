@@ -5,14 +5,14 @@ using Newtonsoft.Json;
 
 
 [System.Serializable]
-public class MapData
+public class JobData
 {
 
     public Dictionary<string, Tile> tiles = new();
 
-    public static MapData Inst()
+    public static JobData Inst()
     {
-        return Game.Inst.data.mapData;
+        return Game.Inst.data.jobData;
     }
 
 }

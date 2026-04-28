@@ -2,13 +2,16 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class HumanData {
+public class LivingData
+{
 
-    public static HumanData Inst() {
-        return Game.Inst.data.humanData;
+    public static LivingData Inst()
+    {
+        return Game.Inst.data.livingData;
     }
 
     //Based on ID
+
     public Dictionary<long, Human> Humans = new();
     public Dictionary<long, HumanDNA> HumanDNA = new();
     public Dictionary<long, Hair> Hairs = new();

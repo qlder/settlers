@@ -2,7 +2,8 @@ using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
 
-public class HumanRenderer : MonoBehaviour {
+public class HumanRenderer : MonoBehaviour
+{
 
     private GameObject humanPrefab;
 
@@ -13,35 +14,42 @@ public class HumanRenderer : MonoBehaviour {
     private readonly Dictionary<long, HumanMono> humanMonos = new();
     public Dictionary<string, Sprite> humanSprites; // Assign in inspector or load at runtime
 
-    void OnEnable() {
+    void OnEnable()
+    {
         humanPrefab = Resources.Load<GameObject>("Human/Human");
         var sprites = Resources.LoadAll<Sprite>("Human/Sprites");
         humanSprites = new Dictionary<string, Sprite>();
-        foreach (var sprite in sprites) {
+        foreach (var sprite in sprites)
+        {
             Debug.Log($"Loaded sprite: {sprite.name}");
             humanSprites[sprite.name] = sprite;
         }
         HumanRenderer.Inst = this;
     }
 
-    private void Update() {
-        if (Game.Inst == null || Game.Inst.data == null || Game.Inst.data.humanData.Humans == null)
+    private void Update()
+    {
+        if (Game.Inst == null || Game.Inst.data == null || Game.Inst.data.livingData.Humans == null)
             return;
 
         SyncHumans();
     }
 
-    private void SyncHumans() {
-        var humans = Game.Inst.data.humanData.Humans;
+    private void SyncHumans()
+    {
+        var humans = Game.Inst.data.livingData.Humans;
 
         // Add/update/remove based on position validity
-        foreach (var pair in humans) {
+        foreach (var pair in humans)
+        {
             long id = pair.Key;
             var human = pair.Value;
 
             // 🚫 No position → ensure renderer is removed
-            if (!human.position.HasValue) {
-                if (humanMonos.TryGetValue(id, out var existing) && existing != null) {
+            if (!human.position.HasValue)
+            {
+                if (humanMonos.TryGetValue(id, out var existing) && existing != null)
+                {
                     Destroy(existing.gameObject);
                 }
 
@@ -52,7 +60,8 @@ public class HumanRenderer : MonoBehaviour {
             float2 pos = human.position.Value;
 
             // ✅ Create if missing (or destroyed)
-            if (!humanMonos.TryGetValue(id, out var mono) || mono == null) {
+            if (!humanMonos.TryGetValue(id, out var mono) || mono == null)
+            {
                 mono = CreateMonoObject(id);
                 humanMonos[id] = mono;
             }
@@ -65,16 +74,21 @@ public class HumanRenderer : MonoBehaviour {
         // Remove deleted humans
         List<long> toRemove = null;
 
-        foreach (var pair in humanMonos) {
-            if (!humans.ContainsKey(pair.Key)) {
+        foreach (var pair in humanMonos)
+        {
+            if (!humans.ContainsKey(pair.Key))
+            {
                 toRemove ??= new List<long>();
                 toRemove.Add(pair.Key);
             }
         }
 
-        if (toRemove != null) {
-            foreach (var id in toRemove) {
-                if (humanMonos.TryGetValue(id, out var sr) && sr != null) {
+        if (toRemove != null)
+        {
+            foreach (var id in toRemove)
+            {
+                if (humanMonos.TryGetValue(id, out var sr) && sr != null)
+                {
                     Destroy(sr.gameObject);
                 }
 
@@ -94,7 +108,8 @@ public class HumanRenderer : MonoBehaviour {
         return humanMono;
     }
 
-    private void UpdateRendererPosition(HumanMono sr, float2 pos) {
+    private void UpdateRendererPosition(HumanMono sr, float2 pos)
+    {
         sr.transform.position = new Vector3(
             pos.x,
             0f,
@@ -102,7 +117,8 @@ public class HumanRenderer : MonoBehaviour {
         );
     }
 
-    private void UpdateMono(HumanMono mono, Human human) {
+    private void UpdateMono(HumanMono mono, Human human)
+    {
         mono.UpdateVisuals(human.Id);
     }
 }

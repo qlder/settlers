@@ -5,19 +5,23 @@ using Unity.Mathematics;
 using Unity.VisualScripting;
 using Newtonsoft.Json.Linq;
 
-public struct Human : IModel, ILiving {
+public struct Human : IModel, ILiving
+{
 
     #region GetSet
-    public static Human? Get(long id) {
+    public static Human? Get(long id)
+    {
         //try to get or return null
-        if (!HumanData.Inst().Humans.TryGetValue(id, out var human)) {
+        if (!LivingData.Inst().Humans.TryGetValue(id, out var human))
+        {
             return null;
         }
         return human;
     }
 
-    public void Save() {
-        HumanData.Inst().Humans[Id] = this;
+    public void Save()
+    {
+        LivingData.Inst().Humans[Id] = this;
     }
     #endregion 
 
@@ -28,19 +32,23 @@ public struct Human : IModel, ILiving {
 
 }
 
-public struct HumanDNA : IModel {
+public struct HumanDNA : IModel
+{
 
     #region GetSet
-    public static HumanDNA? Get(long id) {
+    public static HumanDNA? Get(long id)
+    {
         //try to get or return null
-        if (!HumanData.Inst().HumanDNA.TryGetValue(id, out var humanDna)) {
+        if (!LivingData.Inst().HumanDNA.TryGetValue(id, out var humanDna))
+        {
             return null;
         }
         return humanDna;
     }
 
-    public void Save() {
-        HumanData.Inst().HumanDNA[Id] = this;
+    public void Save()
+    {
+        LivingData.Inst().HumanDNA[Id] = this;
     }
     #endregion 
 
@@ -53,14 +61,16 @@ public struct HumanDNA : IModel {
     public float skinSat; // = 0.4f ~ 0.6f;
     public float skinDark; // = 0.2f ~ 0.9f;
 
-    public Color HairColor() {
+    public Color HairColor()
+    {
         float h = Mathf.Lerp(0.02f, 0.15f, hairHue);
         float s = Mathf.Lerp(0.3f, 0.9f, hairSat);
         float v = Mathf.Lerp(0.1f, 0.9f, 1f - hairDark);
         return Color.HSVToRGB(h, s, v);
     }
 
-    public Color SkinColor() {
+    public Color SkinColor()
+    {
         float h = Mathf.Lerp(0.04f, 0.08f, skinHue);
         float s = Mathf.Lerp(0.4f, 0.6f, skinSat);
         float v = Mathf.Lerp(0.2f, 0.9f, 1f - (skinDark * skinDark));
@@ -68,14 +78,16 @@ public struct HumanDNA : IModel {
     }
 
     public BodyType bodyType { get; set; }
-    public enum BodyType {
+    public enum BodyType
+    {
         Type1 = 1,
         Type2 = 2,
         Type3 = 3,
     }
 
     public EyeType eyeType { get; set; }
-    public enum EyeType {
+    public enum EyeType
+    {
         Type1 = 1,
         Type2 = 2,
         Type3 = 3,
@@ -85,7 +97,8 @@ public struct HumanDNA : IModel {
     }
 
     public FaceType faceType { get; set; }
-    public enum FaceType {
+    public enum FaceType
+    {
         Type1 = 1,
         Type2 = 2,
         Type3 = 3,

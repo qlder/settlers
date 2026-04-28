@@ -1,27 +1,32 @@
 using System.Collections.Generic;
 
-public struct Moustache : IModel {
+public struct Moustache : IModel
+{
 
     public long Id { get; set; }
 
     #region GetSet
-    public static Moustache? Get(long id) {
+    public static Moustache? Get(long id)
+    {
         //try to get or return null
-        if (!HumanData.Inst().Moustaches.TryGetValue(id, out var moustache)) {
+        if (!LivingData.Inst().Moustaches.TryGetValue(id, out var moustache))
+        {
             return null;
         }
         return moustache;
     }
 
-    public void Save() {
-        HumanData.Inst().Moustaches[Id] = this;
+    public void Save()
+    {
+        LivingData.Inst().Moustaches[Id] = this;
     }
     #endregion
 
 
     public MoustacheStyle style { get; set; }
 
-    public enum MoustacheStyle {
+    public enum MoustacheStyle
+    {
         Type1 = 1,
         Type2 = 2,
         Type3 = 3,

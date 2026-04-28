@@ -1,8 +1,10 @@
 using UnityEngine;
 
-public class GameGenerator {
+public class GameGenerator
+{
 
-    public void Generate(Game game, GameOptions options) {
+    public void Generate(Game game, GameOptions options)
+    {
         GameData gameData = new GameData();
         game.data = gameData;
         game.data.gameOptions = options;
@@ -12,7 +14,7 @@ public class GameGenerator {
         humanGenerator.Generate(game);
 
         Debug.Log("Game generated.");
-        Debug.LogWarning(game.data.humanData.Humans.Count);
+        Debug.LogWarning(game.data.livingData.Humans.Count);
     }
 
 }

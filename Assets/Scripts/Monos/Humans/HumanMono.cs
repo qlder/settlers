@@ -2,7 +2,8 @@ using UnityEngine;
 using Unity.Mathematics;
 using System.Collections.Generic;
 
-public class HumanMono : MonoBehaviour {
+public class HumanMono : MonoBehaviour
+{
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     [SerializeField]
     private SpriteRenderer bodyRend;
@@ -25,7 +26,8 @@ public class HumanMono : MonoBehaviour {
     [TextArea(10, 10)]
     public string debugText;
 
-    public void OnEnable() {
+    public void OnEnable()
+    {
         allRends.Clear();
         allRends.Add(bodyRend);
         allRends.Add(faceRend);
@@ -37,7 +39,8 @@ public class HumanMono : MonoBehaviour {
     }
 
 
-    public void UpdateVisuals(long id) {
+    public void UpdateVisuals(long id)
+    {
 
 
         Human human = Human.Get(id).Value;
@@ -46,7 +49,8 @@ public class HumanMono : MonoBehaviour {
         float posY = human.position.Value.y;
 
         int sortingOrder = (int)(-posY * 100) + 1000000;
-        foreach (var rend in allRends) {
+        foreach (var rend in allRends)
+        {
             rend.sortingOrder = sortingOrder;
         }
 
@@ -59,36 +63,46 @@ public class HumanMono : MonoBehaviour {
 
         bodyRend.color = humanDna.SkinColor();
         faceRend.color = humanDna.SkinColor();
-        foreach (var hand in handRends) {
+        foreach (var hand in handRends)
+        {
             hand.color = humanDna.SkinColor();
         }
 
 
         Hair? hair = Hair.Get(id);
-        if (hair.HasValue) {
+        if (hair.HasValue)
+        {
             string sexStr = human.sex == Sex.Male ? "m" : "f";
             string hairStr = $"human_{sexStr}_hair_{(int)hair.Value.style}_front";
             hairRend.sprite = HumanRenderer.Inst.humanSprites[hairStr];
             hairRend.color = humanDna.HairColor();
-        } else {
+        }
+        else
+        {
             hairRend.sprite = null;
         }
 
         Beard? beard = Beard.Get(id);
-        if (beard.HasValue) {
+        if (beard.HasValue)
+        {
             string beardStr = $"human_beard_{(int)beard.Value.style}_front";
             beardRend.sprite = HumanRenderer.Inst.humanSprites[beardStr];
             beardRend.color = humanDna.HairColor();
-        } else {
+        }
+        else
+        {
             beardRend.sprite = null;
         }
 
         Moustache? moustache = Moustache.Get(id);
-        if (moustache.HasValue) {
+        if (moustache.HasValue)
+        {
             string moustacheStr = $"human_moust_{(int)moustache.Value.style}_front";
             moustacheRend.sprite = HumanRenderer.Inst.humanSprites[moustacheStr];
             moustacheRend.color = humanDna.HairColor();
-        } else {
+        }
+        else
+        {
             moustacheRend.sprite = null;
         }
 

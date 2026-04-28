@@ -5,11 +5,14 @@ using System.Data.Common;
 using Unity.Mathematics;
 using System.Linq;
 
-public class HumanSystem {
+public class HumanSystem
+{
 
-    public void Tick(int ticks) {
-        foreach (long id in HumanData.Inst().Humans.Keys.ToList()) {
-            var human = HumanData.Inst().Humans[id];
+    public void Tick(int ticks)
+    {
+        foreach (long id in LivingData.Inst().Humans.Keys.ToList())
+        {
+            var human = LivingData.Inst().Humans[id];
             if (human.position == null) continue;
             int moves = 1;
             // for (int i = 0; i < ticks; i++) {
@@ -22,7 +25,7 @@ public class HumanSystem {
             float diffY = Rng.Inst().Float(-1f, 1f) * 0.05f;
             position += new float2(diffX, diffY) * moves;
             human.position = position;
-            HumanData.Inst().Humans[id] = human;
+            LivingData.Inst().Humans[id] = human;
         }
     }
 

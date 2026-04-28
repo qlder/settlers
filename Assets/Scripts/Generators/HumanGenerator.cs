@@ -4,19 +4,23 @@ using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
 
-public class HumanGenerator {
+public class HumanGenerator
+{
 
-    public void Generate(Game game) {
+    public void Generate(Game game)
+    {
         GenerateHumans(game);
     }
 
-    private void GenerateHumans(Game game) {
-        HumanData humanData = new HumanData();
-        game.data.humanData = humanData;
+    private void GenerateHumans(Game game)
+    {
+        LivingData livingData = new LivingData();
+        game.data.livingData = livingData;
 
 
         List<Human> firstGen = new();
-        for (int i = 0; i < 1000; i++) {
+        for (int i = 0; i < 1000; i++)
+        {
             HumanFactory humanFactory = new HumanFactory();
             humanFactory.sex = (Sex)(i % 2);
 
