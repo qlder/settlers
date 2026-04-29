@@ -6,6 +6,7 @@ using System.Xml.Serialization;
 public class GameSystem {
 
     public HumanSystem humanSystem = new();
+    public SectorSystem sectorSystem = new();
 
     public static GameSystem Inst() {
         return Game.Inst.system;
@@ -13,6 +14,7 @@ public class GameSystem {
 
     public void Tick(int ticks) {
         humanSystem.Tick(ticks);
+        sectorSystem.RebuildAll();
     }
 
 }

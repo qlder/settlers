@@ -1,5 +1,6 @@
 using Unity.Mathematics;
 using UnityEngine;
+using Newtonsoft.Json;
 
 public struct Tile {
 
@@ -7,8 +8,10 @@ public struct Tile {
     public int2 position;
     public GroundType groundType;
 
-    public float2 Center => position + new float2(0.5f, 0.5f);
+    public int sectorId;
 
+    [JsonIgnore]
+    public float2 Center => position + new float2(0.5f, 0.5f);
 
 
 }
