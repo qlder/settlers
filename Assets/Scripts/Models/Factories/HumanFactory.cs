@@ -65,12 +65,17 @@ public struct HumanFactory {
         } else {
             human.Name = $"Human {human.Id}";
         }
+        human.Save();
+
         if (position != null) {
-            human.position = position.Value;
+            Position pos = new Position();
+            pos.Id = human.Id;
+            pos.coords = position.Value;
+            pos.Save();
         }
 
 
-        human.Save();
+
 
         Genetics genetics = new Genetics();
         genetics.Id = human.Id;

@@ -8,7 +8,7 @@ public class SaveController {
         return Controller.Inst.saveController;
     }
 
-    public void DealWithInput() {
+    public void DealWithInput(float deltaTime) {
 
         if (Keyboard.current.pKey.wasPressedThisFrame) {
             Debug.Log("P key was pressed.");

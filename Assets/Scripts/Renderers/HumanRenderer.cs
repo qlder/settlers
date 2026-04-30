@@ -32,7 +32,7 @@ public class HumanRenderer : MonoBehaviour {
     }
 
     private void SyncHumans() {
-        var humans = Game.Inst.data.livingData.Entities; // Assuming only humans for now, TODO - FIX later
+        var humans = LivingData.Inst().Entities; // Assuming only humans for now, TODO - FIX later
 
         // Add/update/remove based on position validity
         foreach (var pair in humans) {
@@ -40,7 +40,7 @@ public class HumanRenderer : MonoBehaviour {
             var human = pair.Value;
 
             // 🚫 No position → ensure renderer is removed
-            if (!human.position.HasValue) {
+            if (Position.Get(id) == null) {
                 if (humanMonos.TryGetValue(id, out var existing) && existing != null) {
                     Destroy(existing.gameObject);
                 }
@@ -49,7 +49,7 @@ public class HumanRenderer : MonoBehaviour {
                 continue;
             }
 
-            float2 pos = human.position.Value;
+            float2 pos = Position.Get(id).Value.coords;
 
             // ✅ Create if missing (or destroyed)
             if (!humanMonos.TryGetValue(id, out var mono) || mono == null) {

@@ -5,6 +5,6 @@ using UnityEngine;
 public interface ILiving {
 
     public Sex sex { get; set; }
-    public float2? position { get; set; }
+    //public float2? position { get; set; }
 
 }

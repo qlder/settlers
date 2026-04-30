@@ -16,6 +16,7 @@ public class GameData {
     public MapData mapData = new();
     public LivingData livingData = new();
     public JobData jobData = new();
+    public CameraData cameraData = new();
 
     public long GetNextId() {
         return nextId++;

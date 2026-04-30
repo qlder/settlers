@@ -26,7 +26,7 @@ public struct Entity : IModel, ILiving {
 
     public SpeciesType species { get; set; }
     public Sex sex { get; set; }
-    public float2? position { get; set; }
+    // public float2? position { get; set; }
 
 
 }

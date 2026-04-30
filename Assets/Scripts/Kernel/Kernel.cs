@@ -26,10 +26,11 @@ public class Kernel : MonoBehaviour {
 
     void Update() {
 
-        Controller.Inst.DealWithInput();
+        float deltaTime = Time.deltaTime;
+        Controller.Inst.DealWithInput(deltaTime);
 
 
-        accumulator += Time.deltaTime;
+        accumulator += deltaTime;
         int ticks = 0;
         while (accumulator >= tickInterval) {
             accumulator -= tickInterval;

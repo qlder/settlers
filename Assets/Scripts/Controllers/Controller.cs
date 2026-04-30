@@ -8,10 +8,13 @@ public class Controller {
     public static Controller Inst;
 
     public SaveController saveController = new();
+    public CameraController cameraController = new();
 
-    public void DealWithInput() {
+    public void DealWithInput(float deltaTime) {
 
-        saveController.DealWithInput();
+        cameraController.DealWithInput(deltaTime);
+        saveController.DealWithInput(deltaTime);
+
 
     }
 

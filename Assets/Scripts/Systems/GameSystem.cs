@@ -14,7 +14,7 @@ public class GameSystem {
 
     public void Tick(int ticks) {
         humanSystem.Tick(ticks);
-        sectorSystem.RebuildAll();
+        // sectorSystem.RebuildAll();
     }
 
 }

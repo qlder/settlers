@@ -43,7 +43,7 @@ public class HumanMono : MonoBehaviour {
         Entity human = Entity.Get(id).Value;
         Genetics genetics = Genetics.Get(id).Value;
 
-        float posY = human.position.Value.y;
+        float posY = Position.Get(id)?.coords.y ?? 0f;
 
         int sortingOrder = (int)(-posY * 100) + 1000000;
         foreach (var rend in allRends) {

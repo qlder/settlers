@@ -12,10 +12,17 @@ public class LivingData {
 
     public Dictionary<long, Entity> Entities = new();
 
+    //All Entities
     public Dictionary<long, Genetics> Genetics = new();
+
+    //On Map Entities
+    public Dictionary<long, Position> Positions = new();
+
+    //Human Only
     public Dictionary<long, Hair> Hairs = new();
     public Dictionary<long, Moustache> Moustaches = new();
     public Dictionary<long, Beard> Beards = new();
+
 
     // parentId -> childIds
     public OneToMany Fathers = new();
