@@ -1,12 +1,23 @@
 using System;
 using System.Collections.Generic;
+using Newtonsoft.Json;
 
+[System.Serializable]
 public class OneToMany {
     // element -> owner
+
+    [JsonProperty]
     private Dictionary<long, long> ownerMap = new();
 
+    [JsonIgnore]
+    public IReadOnlyDictionary<long, long> GetOwnerMap => ownerMap;
+
     // owner -> elements
+    [JsonProperty]
     private Dictionary<long, List<long>> elementMap = new();
+
+    [JsonIgnore]
+    public IReadOnlyDictionary<long, List<long>> GetElementMap => elementMap;
 
     public void SetOwnerOf(long elementId, long? newOwnerId) {
         // Remove old relationship

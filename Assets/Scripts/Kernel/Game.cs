@@ -9,6 +9,8 @@ public class Game {
 
     public void Tick(int ticks) {
         system.Tick(ticks);
+        Debug.Log($"LivingData.Inst().Entities.Count: {LivingData.Inst().Entities.Count}");
+        Debug.Log($"LivingData.Inst().Fathers.ownerMap.Count: {LivingData.Inst().Fathers.GetOwnerMap.Count}");
     }
 
 

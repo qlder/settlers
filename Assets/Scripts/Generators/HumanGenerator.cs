@@ -11,11 +11,10 @@ public class HumanGenerator {
     }
 
     private void GenerateHumans(Game game) {
-        LivingData livingData = new LivingData();
-        game.data.livingData = livingData;
 
 
         List<Entity> firstGen = new();
+
         for (int i = 0; i < 100; i++) {
             HumanFactory humanFactory = new HumanFactory();
             humanFactory.sex = (Sex)(i % 2);
@@ -27,6 +26,23 @@ public class HumanGenerator {
             Debug.Log($"Generated human {i} with sex {human.sex} at position {position}");
             firstGen.Add(human);
         }
+
+        for (int i = 0; i < 100; i++) {
+            HumanFactory humanFactory = new HumanFactory();
+
+            Entity father = firstGen.GetRandom();
+            Entity mother = firstGen.GetRandom();
+            humanFactory.SetFatherId(father.Id);
+            humanFactory.SetMotherId(mother.Id);
+            float2 position = Position.Get(mother.Id).Value.coords;
+            humanFactory.SetPosition(position);
+            Entity human = humanFactory.Spawn(game.data);
+            Debug.Log($"Generated sec gen human {i} with sex {human.sex} at position {position}");
+        }
+
+
+
+
 
 
 
