@@ -17,6 +17,7 @@ public class LivingData {
 
     //On Map Entities
     public Dictionary<long, Position> Positions = new();
+    public Dictionary<long, Path> Paths = new();
 
     //Human Only
     public Dictionary<long, Hair> Hairs = new();

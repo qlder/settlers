@@ -1,8 +1,7 @@
 using System.Collections.Generic;
 using Unity.Mathematics;
 
-public class PathSystem
-{
+public class PathSystem {
 
     private static readonly int2[] Directions =
     {
@@ -17,8 +16,7 @@ public class PathSystem
         new int2(-1, -1),
     };
 
-    public Queue<Tile> FindPath(Tile startTile, Tile endTile)
-    {
+    public Queue<Tile> FindPath(Tile startTile, Tile endTile) {
         Queue<Tile> emptyPath = new();
 
         if (!IsWalkable(startTile))
@@ -57,8 +55,7 @@ public class PathSystem
         );
     }
 
-    public Queue<Tile> FindPath(string startTileKey, string endTileKey)
-    {
+    public Queue<Tile> FindPath(string startTileKey, string endTileKey) {
         if (!MapData.Inst().tiles.TryGetValue(startTileKey, out Tile startTile))
             return new Queue<Tile>();
 
@@ -71,12 +68,10 @@ public class PathSystem
     private HashSet<string> FindSectorPath(
         string startSectorId,
         string endSectorId
-    )
-    {
+    ) {
         HashSet<string> result = new();
 
-        if (startSectorId == endSectorId)
-        {
+        if (startSectorId == endSectorId) {
             result.Add(startSectorId);
             return result;
         }
@@ -94,8 +89,7 @@ public class PathSystem
             0
         ));
 
-        while (openSet.Count > 0)
-        {
+        while (openSet.Count > 0) {
             SectorNode currentNode = openSet.Pop();
             string currentId = currentNode.sectorId;
 
@@ -109,8 +103,7 @@ public class PathSystem
 
             Sector currentSector = MapData.Inst().sectors[currentId];
 
-            foreach (string neighborId in currentSector.neighborSectorIds)
-            {
+            foreach (string neighborId in currentSector.neighborSectorIds) {
                 if (closedSet.Contains(neighborId))
                     continue;
 
@@ -122,8 +115,7 @@ public class PathSystem
 
                 int tentativeG = gScore[currentId] + 1;
 
-                if (!gScore.ContainsKey(neighborId) || tentativeG < gScore[neighborId])
-                {
+                if (!gScore.ContainsKey(neighborId) || tentativeG < gScore[neighborId]) {
                     cameFrom[neighborId] = currentId;
                     gScore[neighborId] = tentativeG;
 
@@ -144,8 +136,7 @@ public class PathSystem
         string startTileKey,
         string endTileKey,
         HashSet<string> allowedSectorIds
-    )
-    {
+    ) {
         Queue<Tile> emptyPath = new();
 
         MinHeap<TileNode> openSet = new();
@@ -164,8 +155,7 @@ public class PathSystem
             Heuristic(startTile.position, endTile.position)
         ));
 
-        while (openSet.Count > 0)
-        {
+        while (openSet.Count > 0) {
             TileNode currentNode = openSet.Pop();
             string currentKey = currentNode.tileKey;
 
@@ -179,8 +169,7 @@ public class PathSystem
 
             Tile currentTile = MapData.Inst().tiles[currentKey];
 
-            foreach (int2 direction in Directions)
-            {
+            foreach (int2 direction in Directions) {
                 int2 neighborPosition = currentTile.position + direction;
                 string neighborKey = TileKey(neighborPosition);
 
@@ -202,8 +191,7 @@ public class PathSystem
                 int movementCost = IsDiagonal(direction) ? 14 : 10;
                 int tentativeG = gScore[currentKey] + movementCost;
 
-                if (!gScore.ContainsKey(neighborKey) || tentativeG < gScore[neighborKey])
-                {
+                if (!gScore.ContainsKey(neighborKey) || tentativeG < gScore[neighborKey]) {
                     cameFrom[neighborKey] = currentKey;
                     gScore[neighborKey] = tentativeG;
 
@@ -223,14 +211,12 @@ public class PathSystem
     private HashSet<string> ReconstructSectorSet(
         Dictionary<string, string> cameFrom,
         string currentId
-    )
-    {
+    ) {
         HashSet<string> result = new();
 
         result.Add(currentId);
 
-        while (cameFrom.ContainsKey(currentId))
-        {
+        while (cameFrom.ContainsKey(currentId)) {
             currentId = cameFrom[currentId];
             result.Add(currentId);
         }
@@ -241,14 +227,12 @@ public class PathSystem
     private Queue<Tile> ReconstructTilePath(
         Dictionary<string, string> cameFrom,
         string currentKey
-    )
-    {
+    ) {
         List<Tile> reversedPath = new();
 
         reversedPath.Add(MapData.Inst().tiles[currentKey]);
 
-        while (cameFrom.ContainsKey(currentKey))
-        {
+        while (cameFrom.ContainsKey(currentKey)) {
             currentKey = cameFrom[currentKey];
             reversedPath.Add(MapData.Inst().tiles[currentKey]);
         }
@@ -257,26 +241,22 @@ public class PathSystem
 
         Queue<Tile> path = new();
 
-        foreach (Tile tile in reversedPath)
-        {
+        foreach (Tile tile in reversedPath) {
             path.Enqueue(tile);
         }
 
         return path;
     }
 
-    private bool IsWalkable(Tile tile)
-    {
+    private bool IsWalkable(Tile tile) {
         return tile.groundType != GroundType.Water;
     }
 
-    private bool IsDiagonal(int2 direction)
-    {
+    private bool IsDiagonal(int2 direction) {
         return direction.x != 0 && direction.y != 0;
     }
 
-    private bool IsCornerBlocked(int2 position, int2 diagonalDirection)
-    {
+    private bool IsCornerBlocked(int2 position, int2 diagonalDirection) {
         int2 horizontalPosition = position + new int2(diagonalDirection.x, 0);
         int2 verticalPosition = position + new int2(0, diagonalDirection.y);
 
@@ -292,8 +272,7 @@ public class PathSystem
         return !IsWalkable(horizontalTile) || !IsWalkable(verticalTile);
     }
 
-    private int Heuristic(int2 a, int2 b)
-    {
+    private int Heuristic(int2 a, int2 b) {
         int dx = math.abs(a.x - b.x);
         int dy = math.abs(a.y - b.y);
 
@@ -303,63 +282,53 @@ public class PathSystem
         return diagonal * 14 + straight * 10;
     }
 
-    private int SectorHeuristic(Sector a, Sector b)
-    {
+    private int SectorHeuristic(Sector a, Sector b) {
         int dx = math.abs(a.chunkCoord.x - b.chunkCoord.x);
         int dy = math.abs(a.chunkCoord.y - b.chunkCoord.y);
 
         return dx + dy;
     }
 
-    private static string TileKey(int2 position)
-    {
+    private static string TileKey(int2 position) {
         return $"{position.x}_{position.y}";
     }
 
-    private struct TileNode
-    {
+    private struct TileNode {
         public string tileKey;
         public int priority;
 
-        public TileNode(string tileKey, int priority)
-        {
+        public TileNode(string tileKey, int priority) {
             this.tileKey = tileKey;
             this.priority = priority;
         }
     }
 
-    private struct SectorNode
-    {
+    private struct SectorNode {
         public string sectorId;
         public int priority;
 
-        public SectorNode(string sectorId, int priority)
-        {
+        public SectorNode(string sectorId, int priority) {
             this.sectorId = sectorId;
             this.priority = priority;
         }
     }
 
-    private class MinHeap<T>
-    {
+    private class MinHeap<T> {
         private readonly List<T> items = new();
         private readonly IComparer<T> comparer;
 
         public int Count => items.Count;
 
-        public MinHeap()
-        {
+        public MinHeap() {
             comparer = Comparer<T>.Create(Compare);
         }
 
-        public void Push(T item)
-        {
+        public void Push(T item) {
             items.Add(item);
             BubbleUp(items.Count - 1);
         }
 
-        public T Pop()
-        {
+        public T Pop() {
             T result = items[0];
 
             int lastIndex = items.Count - 1;
@@ -372,10 +341,8 @@ public class PathSystem
             return result;
         }
 
-        private void BubbleUp(int index)
-        {
-            while (index > 0)
-            {
+        private void BubbleUp(int index) {
+            while (index > 0) {
                 int parentIndex = (index - 1) / 2;
 
                 if (comparer.Compare(items[index], items[parentIndex]) >= 0)
@@ -386,10 +353,8 @@ public class PathSystem
             }
         }
 
-        private void BubbleDown(int index)
-        {
-            while (true)
-            {
+        private void BubbleDown(int index) {
+            while (true) {
                 int leftIndex = index * 2 + 1;
                 int rightIndex = index * 2 + 2;
                 int smallestIndex = index;
@@ -397,16 +362,14 @@ public class PathSystem
                 if (
                     leftIndex < items.Count &&
                     comparer.Compare(items[leftIndex], items[smallestIndex]) < 0
-                )
-                {
+                ) {
                     smallestIndex = leftIndex;
                 }
 
                 if (
                     rightIndex < items.Count &&
                     comparer.Compare(items[rightIndex], items[smallestIndex]) < 0
-                )
-                {
+                ) {
                     smallestIndex = rightIndex;
                 }
 
@@ -418,23 +381,20 @@ public class PathSystem
             }
         }
 
-        private void Swap(int a, int b)
-        {
+        private void Swap(int a, int b) {
             T temp = items[a];
             items[a] = items[b];
             items[b] = temp;
         }
 
-        private int Compare(T a, T b)
-        {
+        private int Compare(T a, T b) {
             int aPriority = GetPriority(a);
             int bPriority = GetPriority(b);
 
             return aPriority.CompareTo(bPriority);
         }
 
-        private int GetPriority(T item)
-        {
+        private int GetPriority(T item) {
             if (item is TileNode tileNode)
                 return tileNode.priority;
 
