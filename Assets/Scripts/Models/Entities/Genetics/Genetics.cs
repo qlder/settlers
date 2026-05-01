@@ -8,8 +8,10 @@ using Newtonsoft.Json.Linq;
 
 public struct Genetics : IModel {
 
+    public int Id { get; set; }
+
     #region GetSet
-    public static Genetics? Get(long id) {
+    public static Genetics? Get(int id) {
         //try to get or return null
         if (!LivingData.Inst().Genetics.TryGetValue(id, out var genetics)) {
             return null;
@@ -20,9 +22,9 @@ public struct Genetics : IModel {
     public void Save() {
         LivingData.Inst().Genetics[Id] = this;
     }
-    #endregion 
+    #endregion
 
-    public long Id { get; set; }
+
     public HSDGene hairGene;
     public HSDGene skinGene;
     public Dictionary<string, string> geneCodes;

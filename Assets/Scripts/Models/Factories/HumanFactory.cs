@@ -34,16 +34,16 @@ public struct HumanFactory {
     public Sex? sex;
     public string name;
 
-    long? fatherId;
-    long? motherId;
+    int? fatherId;
+    int? motherId;
 
     float2? position;
 
-    public void SetFatherId(long fatherId) {
+    public void SetFatherId(int fatherId) {
         this.fatherId = fatherId;
     }
 
-    public void SetMotherId(long motherId) {
+    public void SetMotherId(int motherId) {
         this.motherId = motherId;
     }
 

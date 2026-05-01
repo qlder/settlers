@@ -8,7 +8,7 @@ using Newtonsoft.Json.Linq;
 public struct Entity : IModel, ILiving {
 
     #region GetSet
-    public static Entity? Get(long id) {
+    public static Entity? Get(int id) {
         //try to get or return null
         if (!LivingData.Inst().Entities.TryGetValue(id, out var entity)) {
             return null;
@@ -21,7 +21,7 @@ public struct Entity : IModel, ILiving {
     }
     #endregion
 
-    public long Id { get; set; }
+    public int Id { get; set; }
     public string Name;
 
     public SpeciesType species { get; set; }

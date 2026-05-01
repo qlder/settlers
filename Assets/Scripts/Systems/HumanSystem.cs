@@ -10,7 +10,7 @@ public class HumanSystem {
     public void Tick(int ticks) {
 
         // Move humans randomly for now, TODO - FIX later
-        foreach (long id in LivingData.Inst().Entities.Keys.ToList()) {
+        foreach (int id in LivingData.Inst().Entities.Keys.ToList()) {
             Entity entity = LivingData.Inst().Entities[id];
             if (LivingData.Inst().Positions.TryGetValue(id, out var position) == false) continue;
             int moves = 1;

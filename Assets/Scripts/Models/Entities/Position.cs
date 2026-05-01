@@ -3,10 +3,10 @@ using Unity.Mathematics;
 
 public struct Position : IModel {
 
-    public long Id { get; set; }
+    public int Id { get; set; }
 
     #region GetSet
-    public static Position? Get(long id) {
+    public static Position? Get(int id) {
         //try to get or return null
         if (!LivingData.Inst().Positions.TryGetValue(id, out var position)) {
             return null;

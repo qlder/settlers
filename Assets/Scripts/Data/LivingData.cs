@@ -10,19 +10,19 @@ public class LivingData {
 
     //Based on ID
 
-    public Dictionary<long, Entity> Entities = new();
+    public Dictionary<int, Entity> Entities = new();
 
     //All Entities
-    public Dictionary<long, Genetics> Genetics = new();
+    public Dictionary<int, Genetics> Genetics = new();
 
     //On Map Entities
-    public Dictionary<long, Position> Positions = new();
-    public Dictionary<long, Path> Paths = new();
+    public Dictionary<int, Position> Positions = new();
+    public Dictionary<int, Path> Paths = new();
 
     //Human Only
-    public Dictionary<long, Hair> Hairs = new();
-    public Dictionary<long, Moustache> Moustaches = new();
-    public Dictionary<long, Beard> Beards = new();
+    public Dictionary<int, Hair> Hairs = new();
+    public Dictionary<int, Moustache> Moustaches = new();
+    public Dictionary<int, Beard> Beards = new();
 
 
     // parentId -> childIds

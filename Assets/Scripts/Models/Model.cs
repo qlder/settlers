@@ -3,7 +3,7 @@ using UnityEngine;
 
 public interface IModel {
 
-    long Id { get; set; }
+    int Id { get; set; }
 
     void Save();
 

@@ -8,10 +8,10 @@ using Newtonsoft.Json.Linq;
 [System.Serializable]
 public struct Path : IModel {
 
-    public long Id { get; set; }
+    public int Id { get; set; }
 
     #region GetSet
-    public static Path? Get(long id) {
+    public static Path? Get(int id) {
         //try to get or return null
         if (!LivingData.Inst().Paths.TryGetValue(id, out var path)) {
             return null;

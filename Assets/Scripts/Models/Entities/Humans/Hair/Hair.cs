@@ -2,10 +2,10 @@ using System.Collections.Generic;
 
 public struct Hair : IModel {
 
-    public long Id { get; set; }
+    public int Id { get; set; }
 
     #region GetSet
-    public static Hair? Get(long id) {
+    public static Hair? Get(int id) {
         //try to get or return null
         if (!LivingData.Inst().Hairs.TryGetValue(id, out var hair)) {
             return null;

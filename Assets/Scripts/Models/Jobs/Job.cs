@@ -7,8 +7,9 @@ using Newtonsoft.Json.Linq;
 
 public struct Job : IModel {
 
+    public int Id { get; set; }
     #region GetSet
-    public static Job? Get(long id) {
+    public static Job? Get(int id) {
         //try to get or return null
         if (!JobData.Inst().Jobs.TryGetValue(id, out var job)) {
             return null;
@@ -21,7 +22,6 @@ public struct Job : IModel {
     }
     #endregion
 
-    public long Id { get; set; }
     public string Name;
 
 

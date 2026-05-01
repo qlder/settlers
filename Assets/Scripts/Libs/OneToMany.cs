@@ -7,19 +7,19 @@ public class OneToMany {
     // element -> owner
 
     [JsonProperty]
-    private Dictionary<long, long> ownerMap = new();
+    private Dictionary<int, int> ownerMap = new();
 
     [JsonIgnore]
-    public IReadOnlyDictionary<long, long> GetOwnerMap => ownerMap;
+    public IReadOnlyDictionary<int, int> GetOwnerMap => ownerMap;
 
     // owner -> elements
     [JsonProperty]
-    private Dictionary<long, List<long>> elementMap = new();
+    private Dictionary<int, List<int>> elementMap = new();
 
     [JsonIgnore]
-    public IReadOnlyDictionary<long, List<long>> GetElementMap => elementMap;
+    public IReadOnlyDictionary<int, List<int>> GetElementMap => elementMap;
 
-    public void SetOwnerOf(long elementId, long? newOwnerId) {
+    public void SetOwnerOf(int elementId, int? newOwnerId) {
         // Remove old relationship
         if (ownerMap.TryGetValue(elementId, out var oldOwnerId)) {
             if (elementMap.TryGetValue(oldOwnerId, out var oldList)) {
@@ -34,12 +34,12 @@ public class OneToMany {
 
         // Add new relationship
         if (newOwnerId.HasValue) {
-            long ownerId = newOwnerId.Value;
+            int ownerId = newOwnerId.Value;
 
             ownerMap[elementId] = ownerId;
 
             if (!elementMap.TryGetValue(ownerId, out var list)) {
-                list = new List<long>();
+                list = new List<int>();
                 elementMap[ownerId] = list;
             }
 
@@ -48,26 +48,26 @@ public class OneToMany {
         }
     }
 
-    public void RemoveOwner(long elementId) {
+    public void RemoveOwner(int elementId) {
         SetOwnerOf(elementId, null);
     }
 
-    public bool TryGetOwner(long elementId, out long ownerId) {
+    public bool TryGetOwner(int elementId, out int ownerId) {
         return ownerMap.TryGetValue(elementId, out ownerId);
     }
 
-    public IReadOnlyList<long> GetElements(long ownerId) {
+    public IReadOnlyList<int> GetElements(int ownerId) {
         if (elementMap.TryGetValue(ownerId, out var list))
             return list;
 
-        return Array.Empty<long>();
+        return Array.Empty<int>();
     }
 
-    public bool HasOwner(long elementId) {
+    public bool HasOwner(int elementId) {
         return ownerMap.ContainsKey(elementId);
     }
 
-    public bool HasElements(long ownerId) {
+    public bool HasElements(int ownerId) {
         return elementMap.ContainsKey(ownerId);
     }
 

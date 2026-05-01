@@ -10,7 +10,7 @@ public class HumanRenderer : MonoBehaviour {
 
 
     // Replace int with whatever key type Game.inst.data.Humans uses
-    private readonly Dictionary<long, HumanMono> humanMonos = new();
+    private readonly Dictionary<int, HumanMono> humanMonos = new();
     public Dictionary<string, Sprite> humanSprites; // Assign in inspector or load at runtime
 
     void OnEnable() {
@@ -36,7 +36,7 @@ public class HumanRenderer : MonoBehaviour {
 
         // Add/update/remove based on position validity
         foreach (var pair in humans) {
-            long id = pair.Key;
+            int id = pair.Key;
             var human = pair.Value;
 
             // 🚫 No position → ensure renderer is removed
@@ -63,11 +63,11 @@ public class HumanRenderer : MonoBehaviour {
         }
 
         // Remove deleted humans
-        List<long> toRemove = null;
+        List<int> toRemove = null;
 
         foreach (var pair in humanMonos) {
             if (!humans.ContainsKey(pair.Key)) {
-                toRemove ??= new List<long>();
+                toRemove ??= new List<int>();
                 toRemove.Add(pair.Key);
             }
         }
@@ -83,7 +83,7 @@ public class HumanRenderer : MonoBehaviour {
         }
     }
 
-    private HumanMono CreateMonoObject(long id) // change type if needed
+    private HumanMono CreateMonoObject(int id) // change type if needed
     {
         var go = GameObject.Instantiate(humanPrefab);
 

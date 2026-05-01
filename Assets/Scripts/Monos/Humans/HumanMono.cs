@@ -37,7 +37,7 @@ public class HumanMono : MonoBehaviour {
     }
 
 
-    public void UpdateVisuals(long id) {
+    public void UpdateVisuals(int id) {
 
 
         Entity human = Entity.Get(id).Value;

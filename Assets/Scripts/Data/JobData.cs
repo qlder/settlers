@@ -11,6 +11,6 @@ public class JobData {
         return Game.Inst.data.jobData;
     }
 
-    public Dictionary<long, Job> Jobs = new();
+    public Dictionary<int, Job> Jobs = new();
 
 }
