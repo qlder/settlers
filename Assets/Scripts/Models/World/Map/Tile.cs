@@ -8,7 +8,7 @@ public struct Tile {
     public int2 position;
     public GroundType groundType;
 
-    public int sectorId;
+    public string sectorId;
 
     [JsonIgnore]
     public float2 Center => position + new float2(0.5f, 0.5f);

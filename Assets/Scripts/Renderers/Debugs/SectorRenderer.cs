@@ -41,10 +41,20 @@ public class SectorRenderer : MonoBehaviour {
 
 
             if (MapData.Inst().tiles.TryGetValue(tileKey, out Tile tile)) {
-                Rng rng = new Rng((uint)tile.sectorId, false);
+                Rng rng = new Rng((uint)tile.sectorId.GetHashCode(), false);
                 Color color = new Color(rng.Float01(), rng.Float01(), rng.Float01());
 
-                debugObject.GetComponent<TextMeshPro>().text = $"<color=#{ColorUtility.ToHtmlStringRGBA(color)}>{tile.sectorId}</color>";
+
+
+                string text = $"<color=#{ColorUtility.ToHtmlStringRGBA(color)}>{tile.key}</color>\n";
+
+                if (MapData.Inst().sectors.TryGetValue(tile.sectorId, out Sector sector)) {
+                    Rng rng2 = new Rng((uint)sector.connectivityId.GetHashCode(), false);
+                    Color color2 = new Color(rng2.Float01(), rng2.Float01(), rng2.Float01());
+                    text += $"<color=#{ColorUtility.ToHtmlStringRGBA(color2)}>{sector.connectivityId}</color>";
+                }
+
+                debugObject.GetComponent<TextMeshPro>().text = text;
             }
 
             // // Update color based on sector passability

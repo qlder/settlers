@@ -20,7 +20,7 @@ public class MapGenerator {
                 tile.key = $"{x}_{z}";
                 tile.position = new int2(x, z);
                 tile.groundType = GroundType.Earth;
-                tile.sectorId = -1;
+                tile.sectorId = "";
                 if (x < mapSize / 4 || x > mapSize * 3 / 4 || z < mapSize / 4 || z > mapSize * 3 / 4) {
                     tile.groundType = GroundType.Water;
                 }
