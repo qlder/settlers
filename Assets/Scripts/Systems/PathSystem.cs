@@ -3,6 +3,10 @@ using Unity.Mathematics;
 
 public class PathSystem {
 
+    public static PathSystem Inst() {
+        return Game.Inst.system.pathSystem;
+    }
+
     private static readonly int2[] Directions =
     {
         new int2(1, 0),
@@ -16,29 +20,40 @@ public class PathSystem {
         new int2(-1, -1),
     };
 
-    public Queue<Tile> FindPath(Tile startTile, Tile endTile) {
-        Queue<Tile> emptyPath = new();
+    public Path FindPath(string startTileKey, string endTileKey) {
+        if (!MapData.Inst().tiles.TryGetValue(startTileKey, out Tile startTile))
+            return InvalidPath();
 
+        if (!MapData.Inst().tiles.TryGetValue(endTileKey, out Tile endTile))
+            return InvalidPath();
+
+        return FindPath(startTile, endTile);
+    }
+
+    public Path FindPath(Tile startTile, Tile endTile) {
         if (!IsWalkable(startTile))
-            return emptyPath;
+            return InvalidPath();
 
         if (!IsWalkable(endTile))
-            return emptyPath;
+            return InvalidPath();
 
         if (string.IsNullOrEmpty(startTile.sectorId))
-            return emptyPath;
+            return InvalidPath();
 
         if (string.IsNullOrEmpty(endTile.sectorId))
-            return emptyPath;
+            return InvalidPath();
 
         if (!MapData.Inst().sectors.TryGetValue(startTile.sectorId, out Sector startSector))
-            return emptyPath;
+            return InvalidPath();
 
         if (!MapData.Inst().sectors.TryGetValue(endTile.sectorId, out Sector endSector))
-            return emptyPath;
+            return InvalidPath();
+
+        if (!startSector.IsWalkable || !endSector.IsWalkable)
+            return InvalidPath();
 
         if (startSector.connectivityId != endSector.connectivityId)
-            return emptyPath;
+            return InvalidPath();
 
         HashSet<string> allowedSectorIds = FindSectorPath(
             startSector.id,
@@ -46,23 +61,18 @@ public class PathSystem {
         );
 
         if (allowedSectorIds.Count == 0)
-            return emptyPath;
+            return InvalidPath();
 
-        return FindTilePath(
+        Queue<string> tileKeys = FindTilePath(
             startTile.key,
             endTile.key,
             allowedSectorIds
         );
-    }
 
-    public Queue<Tile> FindPath(string startTileKey, string endTileKey) {
-        if (!MapData.Inst().tiles.TryGetValue(startTileKey, out Tile startTile))
-            return new Queue<Tile>();
+        if (tileKeys.Count == 0)
+            return InvalidPath();
 
-        if (!MapData.Inst().tiles.TryGetValue(endTileKey, out Tile endTile))
-            return new Queue<Tile>();
-
-        return FindPath(startTile, endTile);
+        return CompletePath(tileKeys);
     }
 
     private HashSet<string> FindSectorPath(
@@ -84,10 +94,7 @@ public class PathSystem {
 
         gScore[startSectorId] = 0;
 
-        openSet.Push(new SectorNode(
-            startSectorId,
-            0
-        ));
+        openSet.Push(new SectorNode(startSectorId, 0));
 
         while (openSet.Count > 0) {
             SectorNode currentNode = openSet.Pop();
@@ -113,18 +120,17 @@ public class PathSystem {
                 if (!neighborSector.IsWalkable)
                     continue;
 
-                int tentativeG = gScore[currentId] + 1;
+                int tentativeG = gScore[currentId] + 10;
 
                 if (!gScore.ContainsKey(neighborId) || tentativeG < gScore[neighborId]) {
                     cameFrom[neighborId] = currentId;
                     gScore[neighborId] = tentativeG;
 
-                    int priority = tentativeG + SectorHeuristic(neighborSector, MapData.Inst().sectors[endSectorId]);
+                    int priority =
+                        tentativeG +
+                        SectorHeuristic(neighborSector, MapData.Inst().sectors[endSectorId]);
 
-                    openSet.Push(new SectorNode(
-                        neighborId,
-                        priority
-                    ));
+                    openSet.Push(new SectorNode(neighborId, priority));
                 }
             }
         }
@@ -132,12 +138,12 @@ public class PathSystem {
         return result;
     }
 
-    private Queue<Tile> FindTilePath(
+    private Queue<string> FindTilePath(
         string startTileKey,
         string endTileKey,
         HashSet<string> allowedSectorIds
     ) {
-        Queue<Tile> emptyPath = new();
+        Queue<string> emptyPath = new();
 
         MinHeap<TileNode> openSet = new();
         HashSet<string> closedSet = new();
@@ -195,12 +201,11 @@ public class PathSystem {
                     cameFrom[neighborKey] = currentKey;
                     gScore[neighborKey] = tentativeG;
 
-                    int priority = tentativeG + Heuristic(neighbor.position, endTile.position);
+                    int priority =
+                        tentativeG +
+                        Heuristic(neighbor.position, endTile.position);
 
-                    openSet.Push(new TileNode(
-                        neighborKey,
-                        priority
-                    ));
+                    openSet.Push(new TileNode(neighborKey, priority));
                 }
             }
         }
@@ -224,28 +229,42 @@ public class PathSystem {
         return result;
     }
 
-    private Queue<Tile> ReconstructTilePath(
+    private Queue<string> ReconstructTilePath(
         Dictionary<string, string> cameFrom,
         string currentKey
     ) {
-        List<Tile> reversedPath = new();
+        List<string> reversedPath = new();
 
-        reversedPath.Add(MapData.Inst().tiles[currentKey]);
+        reversedPath.Add(currentKey);
 
         while (cameFrom.ContainsKey(currentKey)) {
             currentKey = cameFrom[currentKey];
-            reversedPath.Add(MapData.Inst().tiles[currentKey]);
+            reversedPath.Add(currentKey);
         }
 
         reversedPath.Reverse();
 
-        Queue<Tile> path = new();
+        Queue<string> path = new();
 
-        foreach (Tile tile in reversedPath) {
-            path.Enqueue(tile);
+        foreach (string tileKey in reversedPath) {
+            path.Enqueue(tileKey);
         }
 
         return path;
+    }
+
+    private Path CompletePath(Queue<string> tileKeys) {
+        return new Path {
+            tile_keys = tileKeys,
+            status = Path.PathStatus.Complete
+        };
+    }
+
+    private Path InvalidPath() {
+        return new Path {
+            tile_keys = new Queue<string>(),
+            status = Path.PathStatus.Invalid
+        };
     }
 
     private bool IsWalkable(Tile tile) {
@@ -286,7 +305,10 @@ public class PathSystem {
         int dx = math.abs(a.chunkCoord.x - b.chunkCoord.x);
         int dy = math.abs(a.chunkCoord.y - b.chunkCoord.y);
 
-        return dx + dy;
+        int diagonal = math.min(dx, dy);
+        int straight = math.max(dx, dy) - diagonal;
+
+        return diagonal * 14 + straight * 10;
     }
 
     private static string TileKey(int2 position) {
@@ -315,13 +337,8 @@ public class PathSystem {
 
     private class MinHeap<T> {
         private readonly List<T> items = new();
-        private readonly IComparer<T> comparer;
 
         public int Count => items.Count;
-
-        public MinHeap() {
-            comparer = Comparer<T>.Create(Compare);
-        }
 
         public void Push(T item) {
             items.Add(item);
@@ -345,7 +362,7 @@ public class PathSystem {
             while (index > 0) {
                 int parentIndex = (index - 1) / 2;
 
-                if (comparer.Compare(items[index], items[parentIndex]) >= 0)
+                if (Compare(items[index], items[parentIndex]) >= 0)
                     break;
 
                 Swap(index, parentIndex);
@@ -359,19 +376,11 @@ public class PathSystem {
                 int rightIndex = index * 2 + 2;
                 int smallestIndex = index;
 
-                if (
-                    leftIndex < items.Count &&
-                    comparer.Compare(items[leftIndex], items[smallestIndex]) < 0
-                ) {
+                if (leftIndex < items.Count && Compare(items[leftIndex], items[smallestIndex]) < 0)
                     smallestIndex = leftIndex;
-                }
 
-                if (
-                    rightIndex < items.Count &&
-                    comparer.Compare(items[rightIndex], items[smallestIndex]) < 0
-                ) {
+                if (rightIndex < items.Count && Compare(items[rightIndex], items[smallestIndex]) < 0)
                     smallestIndex = rightIndex;
-                }
 
                 if (smallestIndex == index)
                     break;
@@ -388,10 +397,7 @@ public class PathSystem {
         }
 
         private int Compare(T a, T b) {
-            int aPriority = GetPriority(a);
-            int bPriority = GetPriority(b);
-
-            return aPriority.CompareTo(bPriority);
+            return GetPriority(a).CompareTo(GetPriority(b));
         }
 
         private int GetPriority(T item) {

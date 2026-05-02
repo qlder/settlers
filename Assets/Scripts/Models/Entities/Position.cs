@@ -20,6 +20,7 @@ public struct Position : IModel {
     #endregion
 
     public float2 coords { get; set; }
+    public Facing facing { get; set; }
 
     public Tile GetTile() {
         string key = $"{(int)coords.x}_{(int)coords.y}";

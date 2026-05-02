@@ -30,7 +30,7 @@ public struct Path : IModel {
         Invalid = 2
     }
 
-    public Queue<float2> points;
+    public Queue<string> tile_keys;
     public PathStatus status;
 
 }

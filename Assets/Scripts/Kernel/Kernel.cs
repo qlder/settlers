@@ -18,6 +18,8 @@ public class Kernel : MonoBehaviour {
 
         Controller controller = new Controller();
         Controller.Inst = controller;
+
+        game.Setup();
     }
 
     private float tickInterval = 0.01f;
@@ -28,7 +30,6 @@ public class Kernel : MonoBehaviour {
 
         float deltaTime = Time.deltaTime;
         Controller.Inst.DealWithInput(deltaTime);
-
 
         accumulator += deltaTime;
         int ticks = 0;

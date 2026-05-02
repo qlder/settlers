@@ -9,7 +9,7 @@ public class GameData {
         return Game.Inst.data;
     }
 
-    public int nextId = 1;
+
     public uint rngState = 0; // Will be set by Rng class.
 
     public GameOptions gameOptions = new();
@@ -18,8 +18,6 @@ public class GameData {
     public JobData jobData = new();
     public CameraData cameraData = new();
 
-    public int GetNextId() {
-        return nextId++;
-    }
+
 
 }

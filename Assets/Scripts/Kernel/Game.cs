@@ -7,10 +7,12 @@ public class Game {
     public GameData data = new();
     public GameSystem system = new();
 
+    public void Setup() {
+        system.Setup();
+    }
+
     public void Tick(int ticks) {
         system.Tick(ticks);
-        Debug.Log($"LivingData.Inst().Entities.Count: {LivingData.Inst().Entities.Count}");
-        Debug.Log($"LivingData.Inst().Fathers.ownerMap.Count: {LivingData.Inst().Fathers.GetOwnerMap.Count}");
     }
 
 

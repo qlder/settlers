@@ -11,6 +11,12 @@ public class JobData {
         return Game.Inst.data.jobData;
     }
 
+    public int nextId = 1;
+    public int GetNextId() {
+        return nextId++;
+    }
+
     public Dictionary<int, Job> Jobs = new();
+
 
 }

@@ -8,6 +8,11 @@ public class LivingData {
         return Game.Inst.data.livingData;
     }
 
+    public int nextId = 1;
+    public int GetNextId() {
+        return nextId++;
+    }
+
     //Based on ID
 
     public Dictionary<int, Entity> Entities = new();
@@ -23,6 +28,8 @@ public class LivingData {
     public Dictionary<int, Hair> Hairs = new();
     public Dictionary<int, Moustache> Moustaches = new();
     public Dictionary<int, Beard> Beards = new();
+
+    public Dictionary<int, int> JobIds = new();
 
 
     // parentId -> childIds

@@ -15,7 +15,7 @@ public class HumanGenerator {
 
         List<Entity> firstGen = new();
 
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < 10; i++) {
             HumanFactory humanFactory = new HumanFactory();
             humanFactory.sex = (Sex)(i % 2);
 
@@ -27,7 +27,7 @@ public class HumanGenerator {
             firstGen.Add(human);
         }
 
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < 10; i++) {
             HumanFactory humanFactory = new HumanFactory();
 
             Entity father = firstGen.GetRandom();

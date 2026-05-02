@@ -53,7 +53,7 @@ public struct HumanFactory {
 
     public Entity Spawn(GameData gameData) {
         Entity human = new Entity();
-        human.Id = gameData.GetNextId();
+        human.Id = gameData.livingData.GetNextId();
         human.species = SpeciesType.Human;
         if (sex != null) {
             human.sex = sex.Value;

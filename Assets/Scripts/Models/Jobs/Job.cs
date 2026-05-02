@@ -22,8 +22,8 @@ public struct Job : IModel {
     }
     #endregion
 
-    public string Name;
-
+    public string tile_key { get; set; }
+    public bool at_tile { get; set; }
 
 
 }
