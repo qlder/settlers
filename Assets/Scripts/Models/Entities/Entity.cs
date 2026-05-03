@@ -3,7 +3,6 @@ using System.Linq;
 using UnityEngine;
 using Unity.Mathematics;
 using Unity.VisualScripting;
-using Newtonsoft.Json.Linq;
 
 public struct Entity : IModel, ILiving {
 

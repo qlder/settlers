@@ -30,12 +30,12 @@ public class TerrainRenderer : MonoBehaviour {
     void CreateTerrains(MapData mapData) {
         foreach (var tile in mapData.tiles.Values) {
             GameObject terrainObj = GameObject.Instantiate(landPrefab);
-            terrainObj.transform.position = new Vector3(tile.position.x + 0.5f, 0, tile.position.y + 0.5f);
+            terrainObj.transform.position = new Vector3(tile.X + 0.5f, 0, tile.Y + 0.5f);
             terrainObj.transform.parent = transform;
-            terrainObj.name = $"Terrain_{tile.position.x}_{tile.position.y}";
+            terrainObj.name = $"Terrain_{tile.X}_{tile.Y}";
             terrainObjects[terrainObj.name] = terrainObj.GetComponent<SpriteRenderer>();
             Color tint = Color.white;
-            if (tile.groundType == GroundType.Water) {
+            if (tile.GroundType == GroundType.Water) {
                 tint = Color.blue;
             } else {
                 tint = Color.green;

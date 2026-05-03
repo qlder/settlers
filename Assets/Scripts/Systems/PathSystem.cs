@@ -37,35 +37,35 @@ public class PathSystem {
         if (!IsWalkable(endTile))
             return InvalidPath();
 
-        if (string.IsNullOrEmpty(startTile.sectorId))
+        if (string.IsNullOrEmpty(startTile.SectorKey))
             return InvalidPath();
 
-        if (string.IsNullOrEmpty(endTile.sectorId))
+        if (string.IsNullOrEmpty(endTile.SectorKey))
             return InvalidPath();
 
-        if (!MapData.Inst().sectors.TryGetValue(startTile.sectorId, out Sector startSector))
+        if (!MapData.Inst().sectors.TryGetValue(startTile.SectorKey, out Sector startSector))
             return InvalidPath();
 
-        if (!MapData.Inst().sectors.TryGetValue(endTile.sectorId, out Sector endSector))
+        if (!MapData.Inst().sectors.TryGetValue(endTile.SectorKey, out Sector endSector))
             return InvalidPath();
 
         if (!startSector.IsWalkable || !endSector.IsWalkable)
             return InvalidPath();
 
-        if (startSector.connectivityId != endSector.connectivityId)
+        if (startSector.ConnectivityId != endSector.ConnectivityId)
             return InvalidPath();
 
         HashSet<string> allowedSectorIds = FindSectorPath(
-            startSector.id,
-            endSector.id
+            startSector.Key,
+            endSector.Key
         );
 
         if (allowedSectorIds.Count == 0)
             return InvalidPath();
 
         Queue<string> tileKeys = FindTilePath(
-            startTile.key,
-            endTile.key,
+            startTile.Key,
+            endTile.Key,
             allowedSectorIds
         );
 
@@ -158,7 +158,7 @@ public class PathSystem {
 
         openSet.Push(new TileNode(
             startTileKey,
-            Heuristic(startTile.position, endTile.position)
+            Heuristic(startTile.GetPosition(), endTile.GetPosition())
         ));
 
         while (openSet.Count > 0) {
@@ -176,7 +176,7 @@ public class PathSystem {
             Tile currentTile = MapData.Inst().tiles[currentKey];
 
             foreach (int2 direction in Directions) {
-                int2 neighborPosition = currentTile.position + direction;
+                int2 neighborPosition = currentTile.GetPosition() + direction;
                 string neighborKey = TileKey(neighborPosition);
 
                 if (!MapData.Inst().tiles.TryGetValue(neighborKey, out Tile neighbor))
@@ -188,10 +188,10 @@ public class PathSystem {
                 if (!IsWalkable(neighbor))
                     continue;
 
-                if (!allowedSectorIds.Contains(neighbor.sectorId))
+                if (!allowedSectorIds.Contains(neighbor.SectorKey))
                     continue;
 
-                if (IsDiagonal(direction) && IsCornerBlocked(currentTile.position, direction))
+                if (IsDiagonal(direction) && IsCornerBlocked(new int2(currentTile.X, currentTile.Y), direction))
                     continue;
 
                 int movementCost = IsDiagonal(direction) ? 14 : 10;
@@ -203,7 +203,7 @@ public class PathSystem {
 
                     int priority =
                         tentativeG +
-                        Heuristic(neighbor.position, endTile.position);
+                        Heuristic(neighbor.GetPosition(), endTile.GetPosition());
 
                     openSet.Push(new TileNode(neighborKey, priority));
                 }
@@ -268,7 +268,7 @@ public class PathSystem {
     }
 
     private bool IsWalkable(Tile tile) {
-        return tile.groundType != GroundType.Water;
+        return tile.GroundType != GroundType.Water;
     }
 
     private bool IsDiagonal(int2 direction) {

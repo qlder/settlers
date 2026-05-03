@@ -5,21 +5,21 @@ public enum SectorPassability {
     Impassable,
     Walkable
 }
-[System.Serializable]
+
 public class Sector {
     // Example: "0_0_0"
-    public string id;
+    public string Key;
 
     // Example: "c_0"
-    public string connectivityId;
+    public string ConnectivityId;
 
     public int2 chunkCoord;
-    public SectorPassability passability;
+    public SectorPassability Passability;
 
     public List<string> tileKeys = new();
     public HashSet<string> neighborSectorIds = new();
     public HashSet<long> linkHashes = new();
 
     public bool IsWalkable =>
-        passability == SectorPassability.Walkable;
+        Passability == SectorPassability.Walkable;
 }

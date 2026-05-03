@@ -94,7 +94,7 @@ public struct HumanFactory {
             { "faceType", faceType },
         };
 
-        Debug.Log($"Spawned human with DNA: eyeType={eyeType}, bodyType={bodyType}, faceType={faceType}");
+        // Debug.Log($"Spawned human with DNA: eyeType={eyeType}, bodyType={bodyType}, faceType={faceType}");
         genetics.Save();
 
 

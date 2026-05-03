@@ -13,22 +13,23 @@ public class MapGenerator {
         game.data.mapData = mapData;
 
 
-        int mapSize = game.data.gameOptions.mapSize;
+        int mapSize = game.data.gameOptions.MapSize;
         for (int x = 0; x < mapSize; x++) {
             for (int z = 0; z < mapSize; z++) {
                 Tile tile = new Tile();
-                tile.key = $"{x}_{z}";
-                tile.position = new int2(x, z);
-                tile.groundType = GroundType.Earth;
-                tile.sectorId = "";
+                tile.Key = $"{x}_{z}";
+                tile.X = x;
+                tile.Y = z;
+                tile.GroundType = GroundType.Earth;
+                tile.SectorKey = "";
                 if (x < mapSize / 4 || x > mapSize * 3 / 4 || z < mapSize / 4 || z > mapSize * 3 / 4) {
-                    tile.groundType = GroundType.Water;
+                    tile.GroundType = GroundType.Water;
                 }
                 if (x > 10 && z == 10 && x % 50 != 0) {
-                    tile.groundType = GroundType.Earth;
+                    tile.GroundType = GroundType.Earth;
                 }
 
-                mapData.tiles[tile.key] = tile;
+                mapData.tiles[tile.Key] = tile;
             }
         }
     }

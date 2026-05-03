@@ -6,8 +6,8 @@ public class Kernel : MonoBehaviour {
 
     void OnEnable() {
         GameOptions gameOptions = new GameOptions();
-        gameOptions.seed = 12345;
-        gameOptions.mapSize = 100;
+        gameOptions.Seed = 12345;
+        gameOptions.MapSize = 100;
 
 
         Game game = new Game();

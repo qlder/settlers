@@ -18,7 +18,7 @@ public class HumanRenderer : MonoBehaviour {
         var sprites = Resources.LoadAll<Sprite>("Human/Sprites");
         humanSprites = new Dictionary<string, Sprite>();
         foreach (var sprite in sprites) {
-            Debug.Log($"Loaded sprite: {sprite.name}");
+            // Debug.Log($"Loaded sprite: {sprite.name}");
             humanSprites[sprite.name] = sprite;
         }
         HumanRenderer.Inst = this;

@@ -3,26 +3,22 @@ using UnityEngine;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Linq;
+using SQLite;
+
 
 public class Tile {
 
-    public string key;
-    public int2 position;
-    public GroundType groundType;
+    [PrimaryKey]
+    public string Key { get; set; }
 
-    public string sectorId;
+    [Indexed]
+    public int X { get; set; }
+    [Indexed]
+    public int Y { get; set; }
 
-    [JsonIgnore]
-    public float2 Center => position + new float2(0.5f, 0.5f);
+    public GroundType GroundType { get; set; }
+    public string SectorKey { get; set; }
 
-    //Helpers
-    public Sector GetSector() {
-        return MapData.Inst().sectors[sectorId];
-    }
-
-    public List<Tile> GetConnectedTiles() {
-        return MapData.Inst().tiles.Values.Where(t => t.sectorId == this.sectorId).ToList();
-    }
-
+    public int2 GetPosition() => new int2(X, Y);
 
 }

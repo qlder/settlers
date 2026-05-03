@@ -18,26 +18,26 @@ public class HumanSystem {
 
             if (Rng.Inst().Float(0f, 1f) < 0.95f) continue;
 
-            Entity entity = LivingData.Inst().Entities[id];
-            if (LivingData.Inst().Positions.TryGetValue(id, out var position) == false) continue;
-            if (LivingData.Inst().Paths.TryGetValue(id, out var path)) {
-                if (path.tile_keys.Count > 0) {
-                    string nextTileKey = path.tile_keys.Peek();
-                    Tile nextTile = MapData.Inst().tiles[nextTileKey];
-                    position.coords = nextTile.Center;
-                    position.Save();
-                    path.tile_keys.Dequeue();
-                    LivingData.Inst().Paths[id] = path;
-                } else {
-                    // Reached destination
-                    LivingData.Inst().Paths.Remove(id);
-                    Job job = JobData.Inst().Jobs[LivingData.Inst().JobIds[id]];
-                    JobData.Inst().Jobs.Remove(job.Id);
-                    LivingData.Inst().JobIds.Remove(id);
+            // Entity entity = LivingData.Inst().Entities[id];
+            // if (LivingData.Inst().Positions.TryGetValue(id, out var position) == false) continue;
+            // if (LivingData.Inst().Paths.TryGetValue(id, out var path)) {
+            //     if (path.tile_keys.Count > 0) {
+            //         string nextTileKey = path.tile_keys.Peek();
+            //         Tile nextTile = MapData.Inst().tiles[nextTileKey];
+            //         position.coords = nextTile.Center;
+            //         position.Save();
+            //         path.tile_keys.Dequeue();
+            //         LivingData.Inst().Paths[id] = path;
+            //     } else {
+            //         // Reached destination
+            //         LivingData.Inst().Paths.Remove(id);
+            //         Job job = JobData.Inst().Jobs[LivingData.Inst().JobIds[id]];
+            //         JobData.Inst().Jobs.Remove(job.Id);
+            //         LivingData.Inst().JobIds.Remove(id);
 
-                }
+            //     }
 
-            }
+            // }
 
         }
     }

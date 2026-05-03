@@ -1,9 +1,9 @@
 using UnityEngine;
+using SQLite;
 
-[System.Serializable]
-public struct GameOptions {
+public class GameOptions {
 
-    public int seed;
-    public int mapSize;
+    public int Seed { get; set; }
+    public int MapSize { get; set; }
 
 }

@@ -58,7 +58,7 @@ public class SectorSystem {
         if (!MapData.Inst().tiles.TryGetValue(tileKey, out Tile tile))
             return;
 
-        int2 chunkCoord = GetChunkCoord(tile.position);
+        int2 chunkCoord = GetChunkCoord(new int2(tile.X, tile.Y));
 
         RemoveChunkSectors(chunkCoord);
         ClearChunkTileSectorIds(chunkCoord);
@@ -104,8 +104,8 @@ public class SectorSystem {
                 localSectorIndex
             );
 
-            MapData.Inst().sectors[sector.id] = sector;
-            chunkSectorIds[chunkKey].Add(sector.id);
+            MapData.Inst().sectors[sector.Key] = sector;
+            chunkSectorIds[chunkKey].Add(sector.Key);
 
             localSectorIndex++;
         }
@@ -120,10 +120,10 @@ public class SectorSystem {
         Tile startTile = MapData.Inst().tiles[startTileKey];
 
         Sector sector = new() {
-            id = SectorId(chunkCoord, localSectorIndex),
-            connectivityId = "",
+            Key = SectorId(chunkCoord, localSectorIndex),
+            ConnectivityId = "",
             chunkCoord = chunkCoord,
-            passability = GetPassability(startTile)
+            Passability = GetPassability(startTile)
         };
 
         Queue<string> queue = new();
@@ -134,13 +134,13 @@ public class SectorSystem {
 
             Tile tile = MapData.Inst().tiles[tileKey];
 
-            tile.sectorId = sector.id;
+            tile.SectorKey = sector.Key;
             MapData.Inst().tiles[tileKey] = tile;
 
             sector.tileKeys.Add(tileKey);
 
             foreach (int2 direction in CardinalDirections) {
-                int2 neighborPosition = tile.position + direction;
+                int2 neighborPosition = tile.GetPosition() + direction;
 
                 if (!IsInsideChunk(neighborPosition, chunkCoord))
                     continue;
@@ -153,7 +153,7 @@ public class SectorSystem {
                 if (visited.Contains(neighborKey))
                     continue;
 
-                if (GetPassability(neighbor) != sector.passability)
+                if (GetPassability(neighbor) != sector.Passability)
                     continue;
 
                 visited.Add(neighborKey);
@@ -177,32 +177,32 @@ public class SectorSystem {
         foreach (string tileKey in tileKeys) {
             Tile tile = MapData.Inst().tiles[tileKey];
 
-            if (string.IsNullOrEmpty(tile.sectorId))
+            if (string.IsNullOrEmpty(tile.SectorKey))
                 continue;
 
             foreach (int2 direction in LinkDirections) {
-                int2 neighborPosition = tile.position + direction;
+                int2 neighborPosition = tile.GetPosition() + direction;
                 string neighborKey = TileKey(neighborPosition);
 
                 if (!MapData.Inst().tiles.TryGetValue(neighborKey, out Tile neighbor))
                     continue;
 
-                if (string.IsNullOrEmpty(neighbor.sectorId))
+                if (string.IsNullOrEmpty(neighbor.SectorKey))
                     continue;
 
-                if (neighbor.sectorId == tile.sectorId)
+                if (neighbor.SectorKey == tile.SectorKey)
                     continue;
 
-                Sector a = MapData.Inst().sectors[tile.sectorId];
-                Sector b = MapData.Inst().sectors[neighbor.sectorId];
+                Sector a = MapData.Inst().sectors[tile.SectorKey];
+                Sector b = MapData.Inst().sectors[neighbor.SectorKey];
 
-                if (a.passability != b.passability)
+                if (a.Passability != b.Passability)
                     continue;
 
-                long linkHash = LinkHash(tile.position, neighbor.position);
+                long linkHash = LinkHash(tile.GetPosition(), neighbor.GetPosition());
 
-                RegisterSectorLink(a.id, linkHash);
-                RegisterSectorLink(b.id, linkHash);
+                RegisterSectorLink(a.Key, linkHash);
+                RegisterSectorLink(b.Key, linkHash);
             }
         }
     }
@@ -251,7 +251,7 @@ public class SectorSystem {
                 string currentId = queue.Dequeue();
 
                 Sector current = MapData.Inst().sectors[currentId];
-                current.connectivityId = connectivityId;
+                current.ConnectivityId = connectivityId;
 
                 foreach (string neighborId in current.neighborSectorIds) {
                     if (visited.Contains(neighborId))
@@ -303,7 +303,7 @@ public class SectorSystem {
 
         foreach (string tileKey in tileKeys) {
             Tile tile = MapData.Inst().tiles[tileKey];
-            tile.sectorId = "";
+            tile.SectorKey = "";
             MapData.Inst().tiles[tileKey] = tile;
         }
     }
@@ -311,7 +311,7 @@ public class SectorSystem {
     private void ClearChunkTileSectorIds(int2 chunkCoord) {
         foreach (string tileKey in GetTileKeysInChunk(chunkCoord)) {
             Tile tile = MapData.Inst().tiles[tileKey];
-            tile.sectorId = "";
+            tile.SectorKey = "";
             MapData.Inst().tiles[tileKey] = tile;
         }
     }
@@ -323,7 +323,7 @@ public class SectorSystem {
         foreach (string tileKey in tileKeys) {
             Tile tile = MapData.Inst().tiles[tileKey];
 
-            if (GetChunkCoord(tile.position).Equals(chunkCoord))
+            if (GetChunkCoord(new int2(tile.X, tile.Y)).Equals(chunkCoord))
                 result.Add(tileKey);
         }
 
@@ -334,7 +334,7 @@ public class SectorSystem {
         Dictionary<string, int2> chunks = new();
 
         foreach (Tile tile in MapData.Inst().tiles.Values) {
-            int2 chunkCoord = GetChunkCoord(tile.position);
+            int2 chunkCoord = GetChunkCoord(new int2(tile.X, tile.Y));
             chunks[ChunkKey(chunkCoord)] = chunkCoord;
         }
 
@@ -348,20 +348,20 @@ public class SectorSystem {
         if (!MapData.Inst().tiles.TryGetValue(bKey, out Tile b))
             return false;
 
-        if (string.IsNullOrEmpty(a.sectorId) || string.IsNullOrEmpty(b.sectorId))
+        if (string.IsNullOrEmpty(a.SectorKey) || string.IsNullOrEmpty(b.SectorKey))
             return false;
 
-        if (!MapData.Inst().sectors.TryGetValue(a.sectorId, out Sector sectorA))
+        if (!MapData.Inst().sectors.TryGetValue(a.SectorKey, out Sector sectorA))
             return false;
 
-        if (!MapData.Inst().sectors.TryGetValue(b.sectorId, out Sector sectorB))
+        if (!MapData.Inst().sectors.TryGetValue(b.SectorKey, out Sector sectorB))
             return false;
 
-        return sectorA.connectivityId == sectorB.connectivityId;
+        return sectorA.ConnectivityId == sectorB.ConnectivityId;
     }
 
     private SectorPassability GetPassability(Tile tile) {
-        if (tile.groundType == GroundType.Water)
+        if (tile.GroundType == GroundType.Water)
             return SectorPassability.Impassable;
 
         return SectorPassability.Walkable;
